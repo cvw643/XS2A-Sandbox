@@ -12,8 +12,8 @@ import org.junit.Assert;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import de.adorsys.ledgers.xs2a.api.client.AccountApiClient;
-import de.adorsys.ledgers.xs2a.api.client.ConsentApiClient;
+import de.adorsys.psd2.xs2a.api.client.AccountApiClient;
+import de.adorsys.psd2.xs2a.api.client.ConsentApiClient;
 import de.adorsys.psd2.model.AccountAccess;
 import de.adorsys.psd2.model.AccountAccess.AllPsd2Enum;
 import de.adorsys.psd2.model.AccountDetails;

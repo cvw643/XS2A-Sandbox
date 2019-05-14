@@ -119,14 +119,14 @@ services:
     depends_on:
     - fakesmtp
     environment:
-    - SPRING_PROFILES_ACTIVE=h2
+    - SPRING_PROFILES_ACTIVE=h2,develop
     - DB_URL=jdbc:h2:/var/lib/data/xs2adbs/ledgers;DB_CLOSE_DELAY=-1
     - DB_USER=sa
     - DB_PASSWORD=sa
     - SPRING_JPA_SHOW_SQL=false
-    - LEDGERS_MOCKBANK_DATA_LOAD=true
     - SPRING_MAIL_HOST=fakesmtp
     - LOGGING_LEVEL_ROOT=INFO
+    - SCA_MULTILEVEL_ENABLED=false
     volumes:
     - xs2a-gateway-data:/var/lib/data
     networks:
@@ -149,4 +149,3 @@ services:
     - xs2a-net
     volumes:
     - xs2a-gateway-data:/var/lib/data
-    

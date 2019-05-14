@@ -41,9 +41,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>de.adorsys.ledgers</groupId>
+			<groupId>de.adorsys.psd2</groupId>
 			<artifactId>xs2a-rest-client</artifactId>
-			<version>0.4-SNAPSHOT</version> <!-- TODO need to clarify -->
+			<version>0.1-SNAPSHOT</version> <!-- TODO need to clarify -->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -265,8 +265,8 @@
 								<argument>java</argument>
 								<argument>-jar</argument>
 								<argument>${project.build.directory}/ledgers/ledgers-app.jar</argument>
-								<argument>--spring.profiles.active=h2</argument>
-								<argument>--ledgers.mockbank.data.load=true</argument>
+								<argument>--spring.profiles.active=h2,develop</argument>
+								<argument>--sca.multilevel.enabled=false</argument>
 								<argument>--spring.jpa.show-sql=false</argument>
 								<argument>--log4j.logger.org.springframework=WARN</argument>
 								<argument>--logging.level.root=WARN</argument>
@@ -346,7 +346,7 @@
 								<argument>java</argument>
 								<argument>-jar</argument>
 								<argument>${project.build.directory}/gateway/gateway-app.jar</argument>
-								<argument>--spring.profiles.active=mockspi</argument>
+								<argument>--spring.profiles.active=mockspi,mock-qwac</argument>
 								<argument>--security.basic.enabled=false</argument>
 								<argument>--log4j.logger.org.springframework=WARN</argument>
 								<argument>--logging.level.root=WARN</argument>

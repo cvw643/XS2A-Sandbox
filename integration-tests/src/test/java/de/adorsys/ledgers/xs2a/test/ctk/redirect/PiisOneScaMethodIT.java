@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.PIISConsentCreateResponse;
-import de.adorsys.ledgers.xs2a.api.client.FundsConfirmationResponse;
+import de.adorsys.psd2.xs2a.api.client.FundsConfirmationResponse;
 
 public class PiisOneScaMethodIT extends AbstractPiis {
 	@Override

@@ -15,7 +15,7 @@ import de.adorsys.ledgers.middleware.api.domain.um.ScaUserDataTO;
 import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.PaymentAuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.client.ObaPisApiClient;
-import de.adorsys.ledgers.xs2a.api.client.PaymentApiClient;
+import de.adorsys.psd2.xs2a.api.client.PaymentApiClient;
 import de.adorsys.psd2.model.PaymentInitationRequestResponse201;
 import de.adorsys.psd2.model.PaymentInitiationStatusResponse200Json;
 import de.adorsys.psd2.model.TransactionStatus;
