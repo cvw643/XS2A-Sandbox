@@ -1,7 +1,7 @@
 package de.adorsys.ledgers.xs2a.test.ctk.embedded;
 
+import de.adorsys.ledgers.xs2a.client.PaymentApiClient;
 import de.adorsys.psd2.model.*;
-import de.adorsys.psd2.xs2a.api.client.PaymentApiClient;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.springframework.http.ResponseEntity;

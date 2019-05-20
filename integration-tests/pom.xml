@@ -40,18 +40,19 @@
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>de.adorsys.psd2</groupId>
-			<artifactId>xs2a-rest-client</artifactId>
-			<version>0.1-SNAPSHOT</version> <!-- TODO need to clarify -->
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>de.adorsys.psd2</groupId>
 			<artifactId>xs2a-server-api</artifactId>
 			<version>${xs2a.version}</version>
-			<scope>test</scope>
 		</dependency>
+
+        <!-- Swagger -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
+        </dependency>
 
 		<!-- Commons -->
 		<dependency>
@@ -346,7 +347,7 @@
 								<argument>java</argument>
 								<argument>-jar</argument>
 								<argument>${project.build.directory}/gateway/gateway-app.jar</argument>
-								<argument>--spring.profiles.active=mockspi,mock-qwac</argument>
+								<argument>--spring.profiles.active=mock-qwac</argument>
 								<argument>--security.basic.enabled=false</argument>
 								<argument>--log4j.logger.org.springframework=WARN</argument>
 								<argument>--logging.level.root=WARN</argument>

@@ -237,7 +237,8 @@ public class PISController extends AbstractXISController implements PISApi {
     private void updateScaStatusPaymentStatusConsentData(String psuId, PaymentWorkflow workflow)
         throws PaymentAuthorizeException {
         // UPDATE CMS
-        if (workflow.getScaResponse().getScaStatus() != ScaStatusTO.EXEMPTED) {
+        SCAResponseTO scaResponse = workflow.getScaResponse();
+        if (scaResponse != null && scaResponse.getScaStatus() != ScaStatusTO.EXEMPTED) {
             updateAuthorisationStatus(workflow, psuId, response);
         }
         updatePaymentStatus(response, workflow);

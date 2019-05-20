@@ -1,9 +1,9 @@
 package de.adorsys.ledgers.xs2a.test.ctk.embedded;
 
+import de.adorsys.ledgers.xs2a.client.AccountApiClient;
+import de.adorsys.ledgers.xs2a.client.ConsentApiClient;
 import de.adorsys.psd2.model.*;
 import de.adorsys.psd2.model.AccountAccess.AllPsd2Enum;
-import de.adorsys.psd2.xs2a.api.client.AccountApiClient;
-import de.adorsys.psd2.xs2a.api.client.ConsentApiClient;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.springframework.http.HttpStatus;
