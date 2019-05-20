@@ -134,9 +134,9 @@
 							<destFileName>gateway-app.jar</destFileName>
 						</artifactItem>
 						<artifactItem>
-							<groupId>de.adorsys.ledgers</groupId>
-							<artifactId>consent-management-server</artifactId>
-							<version>0.4-SNAPSHOT</version> <!-- TODO need to clarify -->
+                            <groupId>de.adorsys.psd2</groupId>
+                            <artifactId>cms-standalone-service</artifactId>
+                            <version>${xs2a.version}</version>
 							<type>jar</type>
 							<overWrite>true</overWrite>
 							<outputDirectory>${project.build.directory}/consents</outputDirectory>
@@ -147,7 +147,7 @@
 							<artifactId>ledgers-app</artifactId>
 							<version>${ledgers.version}</version>
 							<type>jar</type>
-							<overWrite>false</overWrite>
+							<overWrite>true</overWrite>
 							<outputDirectory>${project.build.directory}/ledgers</outputDirectory>
 							<destFileName>ledgers-app.jar</destFileName>
 						</artifactItem>
