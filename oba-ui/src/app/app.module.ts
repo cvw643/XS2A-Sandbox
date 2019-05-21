@@ -10,11 +10,13 @@ import {ShareDataService} from './common/services/share-data.service';
 import {ObaErrorsHandler} from "./common/interceptors/ObaErrorsHandler";
 import {NgHttpLoaderModule} from "ng-http-loader";
 import {ApiModule} from "./api/api.module";
+import {InternalServerErrorComponent} from './internal-server-error/internal-server-error.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InternalServerErrorComponent
   ],
   imports: [
     BrowserModule,
