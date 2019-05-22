@@ -2,6 +2,7 @@ import {ErrorHandler, Injectable, Injector, NgZone} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {InfoService} from "../info/info.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {RoutingPath} from "../models/routing-path.model";
 
 @Injectable()
 export class ObaErrorsHandler implements ErrorHandler {
@@ -29,7 +30,7 @@ export class ObaErrorsHandler implements ErrorHandler {
     let httpErrorCode = error.status;
 
     // if router is on the login page: special error handling
-    const login = this.router.url.indexOf('/login') > 0;
+    const login = this.router.url.indexOf(`/${RoutingPath.LOGIN}`) > 0;
     if (login) {
 
       this.activatedRoute.queryParams.subscribe(params => {
@@ -39,7 +40,9 @@ export class ObaErrorsHandler implements ErrorHandler {
       });
 
       // AIS: if no redirectId or encryptedConsentId is provided
-      if (this.encryptedConsentId === undefined || this.redirectId === undefined && (this.router.url.indexOf('/account-information') > 0) ) {
+      if (this.encryptedConsentId === undefined || this.redirectId === undefined
+        && (this.router.url.indexOf(`${RoutingPath.ACCOUNT_INFORMATION}`) > 0) ) {
+
         this.infoService.openFeedback('No consent data is provided', {
           severity: 'error'
         });
@@ -47,7 +50,9 @@ export class ObaErrorsHandler implements ErrorHandler {
       }
 
       // PIS and Payment Cancellation: if no redirectId or paymentId is provided
-      if (this.paymentId === undefined || this.redirectId === undefined && !(this.router.url.indexOf('/account-information') > 0) ) {
+      if ((this.paymentId === undefined || this.redirectId === undefined)
+        && (this.router.url.indexOf(`${RoutingPath.PAYMENT_INITIATION}`) > 0 || this.router.url.indexOf(`${RoutingPath.PAYMENT_CANCELLATION}`) > 0)) {
+
         this.infoService.openFeedback('No payment data is provided', {
           severity: 'error'
         });
@@ -71,7 +76,7 @@ export class ObaErrorsHandler implements ErrorHandler {
       }
       default: {
         // if required could be redirected to internal server error page
-        this.infoService.openFeedback('Internal server error. Please contact technical support', {
+        this.infoService.openFeedback('Consent data is not valid', {
           severity: 'error'
         });
         break;
