@@ -76,7 +76,7 @@ export class ObaErrorsHandler implements ErrorHandler {
       }
       default: {
         // if required could be redirected to internal server error page
-        this.infoService.openFeedback('Consent data is not valid', {
+        this.infoService.openFeedback('Consent data is not valid. Please try again', {
           severity: 'error'
         });
         break;
