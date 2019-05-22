@@ -21,12 +21,31 @@ export class ObaErrorsHandler implements ErrorHandler {
   public handleError(error: any) {
     console.error(error);
     let httpErrorCode = error.httpErrorCode;
-    this.infoService.openFeedback('Error occured', {
-      severity: 'error'
-    });
+
     this.activatedRoute.queryParams.subscribe(params => {
       console.log(params);
     });
+
+    switch(httpErrorCode) {
+      case 401: {
+        this.infoService.openFeedback('401 Error occured', {
+          severity: 'error'
+        });
+        break;
+      }
+      case 403: {
+        this.infoService.openFeedback('403 Error occured', {
+          severity: 'error'
+        });
+        break;
+      }
+      default: {
+        this.infoService.openFeedback('500 Error occured', {
+          severity: 'error'
+        });
+        break;
+      }
+    }
   }
 
 }
