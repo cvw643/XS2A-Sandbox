@@ -41,7 +41,7 @@ export class ObaErrorsHandler implements ErrorHandler {
 
       // AIS: if no redirectId or encryptedConsentId is provided
       if (this.encryptedConsentId === undefined || this.redirectId === undefined
-        && (this.router.url.indexOf(`${RoutingPath.ACCOUNT_INFORMATION}`) > 0) ) {
+        && (this.router.url.indexOf(`${RoutingPath.ACCOUNT_INFORMATION}`) > 0)) {
 
         this.infoService.openFeedback('No consent data is provided', {
           severity: 'error'
