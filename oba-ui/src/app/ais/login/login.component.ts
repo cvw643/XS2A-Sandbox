@@ -2,12 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AisService} from "../../common/services/ais.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Subscription, throwError} from "rxjs";
 import {ShareDataService} from "../../common/services/share-data.service";
 import {RoutingPath} from "../../common/models/routing-path.model";
 import {PSUAISService} from "../../api/services/psuais.service";
 import LoginUsingPOSTParams = PSUAISService.LoginUsingPOSTParams;
 import {InfoService} from "../../common/info/info.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -49,12 +50,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log(authorisationResponse);
         this.shareService.changeData(authorisationResponse);
         this.router.navigate([`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.GRANT_CONSENT}`]);
-      }, error1 => {
+      }, (error1: HttpErrorResponse) => {
         console.log(error1);
-        this.infoService.openFeedback('No consent data is provided', {
-          severity: 'error'
-        });
-      } )
+         throw new HttpErrorResponse(error1);
+      })
     );
   }
 
