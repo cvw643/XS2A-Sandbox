@@ -2,13 +2,9 @@ import {ErrorHandler, Injectable, Injector, NgZone} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {InfoService} from "../info/info.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {RoutingPath} from "../models/routing-path.model";
 
 @Injectable()
 export class ObaErrorsHandler implements ErrorHandler {
-  private encryptedConsentId: string;
-  private paymentId: string;
-  private redirectId: string;
 
   constructor(
     private zone: NgZone,
