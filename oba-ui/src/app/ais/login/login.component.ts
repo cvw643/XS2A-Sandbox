@@ -7,6 +7,7 @@ import {ShareDataService} from "../../common/services/share-data.service";
 import {RoutingPath} from "../../common/models/routing-path.model";
 import {PSUAISService} from "../../api/services/psuais.service";
 import LoginUsingPOSTParams = PSUAISService.LoginUsingPOSTParams;
+import {InfoService} from "../../common/info/info.service";
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
+              private infoService: InfoService,
               private activatedRoute: ActivatedRoute,
               private shareService: ShareDataService,
               private aisService: AisService) {
@@ -47,7 +49,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log(authorisationResponse);
         this.shareService.changeData(authorisationResponse);
         this.router.navigate([`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.GRANT_CONSENT}`]);
-      })
+      }, error1 => {
+        console.log(error1);
+        this.infoService.openFeedback('No consent data is provided', {
+          severity: 'error'
+        });
+      } )
     );
   }
 

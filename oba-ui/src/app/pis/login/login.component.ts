@@ -7,6 +7,7 @@ import {RoutingPath} from "../../common/models/routing-path.model";
 import {PisService} from "../../common/services/pis.service";
 import {PSUPISService} from "../../api/services/psupis.service";
 import LoginUsingPOST2Params = PSUPISService.LoginUsingPOST2Params;
+import {InfoService} from "../../common/info/info.service";
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   constructor(private formBuilder: FormBuilder,
+              private infoService: InfoService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private shareService: ShareDataService,
@@ -47,6 +49,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log(authorisationResponse);
         this.shareService.changeData(authorisationResponse);
         this.router.navigate([`${RoutingPath.PAYMENT_INITIATION}/${RoutingPath.CONFIRM_PAYMENT}`]);
+      }, error1 => {
+        console.log(error1);
+        this.infoService.openFeedback('No payment data is provided', {
+          severity: 'error'
+        });
       })
     );
   }

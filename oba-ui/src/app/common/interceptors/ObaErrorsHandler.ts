@@ -29,37 +29,6 @@ export class ObaErrorsHandler implements ErrorHandler {
 
     let httpErrorCode = error.status;
 
-    // if router is on the login page: special error handling
-    const login = this.router.url.indexOf(`/${RoutingPath.LOGIN}`) > 0;
-    if (login) {
-
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.encryptedConsentId = params['encryptedConsentId'];
-        this.paymentId = params['paymentId'];
-        this.redirectId = params['redirectId'];
-      });
-
-      // AIS: if no redirectId or encryptedConsentId is provided
-      if (this.encryptedConsentId === undefined || this.redirectId === undefined
-        && (this.router.url.indexOf(`${RoutingPath.ACCOUNT_INFORMATION}`) > 0)) {
-
-        this.infoService.openFeedback('No consent data is provided', {
-          severity: 'error'
-        });
-        return;
-      }
-
-      // PIS and Payment Cancellation: if no redirectId or paymentId is provided
-      if ((this.paymentId === undefined || this.redirectId === undefined)
-        && (this.router.url.indexOf(`${RoutingPath.PAYMENT_INITIATION}`) > 0 || this.router.url.indexOf(`${RoutingPath.PAYMENT_CANCELLATION}`) > 0)) {
-
-        this.infoService.openFeedback('No payment data is provided', {
-          severity: 'error'
-        });
-        return;
-      }
-    }
-
     // default error handling
     switch (httpErrorCode) {
       case 401: {

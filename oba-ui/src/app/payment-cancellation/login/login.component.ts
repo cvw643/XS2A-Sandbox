@@ -8,6 +8,7 @@ import {RoutingPath} from "../../common/models/routing-path.model";
 import {PisCancellationService} from "../../common/services/pis-cancellation.service";
 import {PSUPISCancellationService} from "../../api/services/psupiscancellation.service";
 import LoginUsingPOST1Params = PSUPISCancellationService.LoginUsingPOST1Params;
+import {InfoService} from "../../common/info/info.service";
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder,
+              private infoService: InfoService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private pisCancellationService: PisCancellationService,
@@ -49,6 +51,11 @@ export class LoginComponent implements OnInit {
         console.log(authorisationResponse);
         this.shareService.changeData(authorisationResponse);
         this.router.navigate([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.CONFIRM_CANCELLATION}`]);
+      }, error1 => {
+        console.log(error1);
+        this.infoService.openFeedback('No payment data is provided', {
+          severity: 'error'
+        });
       })
     );
   }
