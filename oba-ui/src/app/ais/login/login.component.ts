@@ -2,13 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AisService} from "../../common/services/ais.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription, throwError} from "rxjs";
+import {Subscription} from "rxjs";
 import {ShareDataService} from "../../common/services/share-data.service";
 import {RoutingPath} from "../../common/models/routing-path.model";
 import {PSUAISService} from "../../api/services/psuais.service";
-import LoginUsingPOSTParams = PSUAISService.LoginUsingPOSTParams;
 import {InfoService} from "../../common/info/info.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import LoginUsingPOSTParams = PSUAISService.LoginUsingPOSTParams;
 
 @Component({
   selector: 'app-login',
@@ -51,8 +51,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.shareService.changeData(authorisationResponse);
         this.router.navigate([`${RoutingPath.ACCOUNT_INFORMATION}/${RoutingPath.GRANT_CONSENT}`]);
       }, (error1: HttpErrorResponse) => {
-        console.log(error1);
-         throw new HttpErrorResponse(error1);
+        // if encryptedConsentId or redirectId is missing
+        if (this.encryptedConsentId === undefined || this.redirectId === undefined) {
+          this.infoService.openFeedback('Consent data is missing. Please create consent prior to login', {
+            severity: 'error'
+          });
+        } else {
+          // else throw error
+          throw new HttpErrorResponse(error1);
+        }
       })
     );
   }

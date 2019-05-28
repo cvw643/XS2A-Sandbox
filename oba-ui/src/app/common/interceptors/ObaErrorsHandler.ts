@@ -8,7 +8,6 @@ export class ObaErrorsHandler implements ErrorHandler {
 
   constructor(
     private zone: NgZone,
-    // private infoService: InfoService,
     private injector: Injector) {
   }
 
@@ -25,7 +24,7 @@ export class ObaErrorsHandler implements ErrorHandler {
   }
 
   public handleError(error: HttpErrorResponse) {
-    console.error("Global error handling: ", error);
+    console.error("OBA error handler: ", error);
 
     let httpErrorCode = error.status;
 
@@ -34,8 +33,6 @@ export class ObaErrorsHandler implements ErrorHandler {
       // default error handling
       switch (httpErrorCode) {
         case 401: {
-          console.log('test');
-
           this.infoService.openFeedback('Invalid credentials', {
             severity: 'error'
           });
