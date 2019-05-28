@@ -9,6 +9,7 @@ import {PisCancellationService} from "../../common/services/pis-cancellation.ser
 import {PSUPISCancellationService} from "../../api/services/psupiscancellation.service";
 import LoginUsingPOST1Params = PSUPISCancellationService.LoginUsingPOST1Params;
 import {InfoService} from "../../common/info/info.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -51,11 +52,16 @@ export class LoginComponent implements OnInit {
         console.log(authorisationResponse);
         this.shareService.changeData(authorisationResponse);
         this.router.navigate([`${RoutingPath.PAYMENT_CANCELLATION}/${RoutingPath.CONFIRM_CANCELLATION}`]);
-      }, error1 => {
-        console.log(error1);
-        this.infoService.openFeedback('No payment data is provided', {
-          severity: 'error'
-        });
+      }, (error1: HttpErrorResponse) => {
+        // if paymentId or redirectId is missing
+        if (this.encryptedPaymentId === undefined || this.redirectId === undefined) {
+          this.infoService.openFeedback('Payment data is missing. Please initiate payment cancellation prior to login', {
+            severity: 'error'
+          });
+        } else {
+          // else throw error
+          throw new HttpErrorResponse(error1);
+        }
       })
     );
   }
