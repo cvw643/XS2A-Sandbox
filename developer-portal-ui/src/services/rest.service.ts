@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class RestService {
   // serverUrl = 'https://xs2a.integ.cloud.adorsys.de/v1/consents';
-  serverUrl = '/xs2a-proxy/';
+  serverUrl = '/xs2a-proxy';
 
   constructor(private http: HttpClient) {}
 
   public sendRequest(method, url, headerParams, body?): Observable<any> {
+    console.log(this.serverUrl + url);
     switch (method) {
       case 'POST':
         return this.http.post(this.serverUrl + url, body, {
