@@ -12,7 +12,7 @@ export class TestDataGenerationService {
     public generateTestData(generatePaymentsFlag: boolean) {
         return this.http.get(this.url + '/generate', {
             params: {
-                generatePayments: String(generatePaymentsFlag)
+                generatePayments: generatePaymentsFlag === undefined? 'false' : String(generatePaymentsFlag)
             },
             responseType: 'text'
         });
