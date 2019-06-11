@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {catchError, map} from "rxjs/operators";
-import {Observable, of} from "rxjs";
+import {BehaviorSubject, interval, Observable, of, timer} from "rxjs";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Credentials} from "../models/credentials.model";
 import {User} from "../models/user.model";
@@ -14,14 +14,14 @@ import {Router} from "@angular/router";
 export class AuthService {
 
     public url = `${environment.staffAccessResourceEndPoint}`;
+    // check every minute if token is valid. --> look app.component.ts
+    timer = interval(60000);
+    timerSubject = new BehaviorSubject(0);
     private authTokenStorageKey = 'token';
     private jwtHelperService = new JwtHelperService();
-    private headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'accept': 'application/json'
-    });
 
     constructor(private http: HttpClient, private router: Router) {
+        this.timer.subscribe(time => this.timerSubject.next(time));
     }
 
     authorize(credentials: Credentials): Observable<string> {
@@ -58,13 +58,5 @@ export class AuthService {
         return this.http.post(this.url + '/users/register', user, {
             params: {branch: branch}
         });
-    }
-
-    getTokenExpirationDate(token: string): Date {
-        const decoded = this.jwtHelperService.decodeToken(token);
-        if (decoded.exp === undefined) return null;
-        const date = new Date(0);
-        date.setUTCSeconds(decoded.exp);
-        return date;
     }
 }
