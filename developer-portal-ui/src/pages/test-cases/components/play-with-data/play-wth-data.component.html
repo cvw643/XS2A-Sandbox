@@ -144,5 +144,8 @@
     }"
   ></ngx-loading>
 
-  <button class="submit-btn" (click)="sendRequest()">Submit</button>
+  <div class="btns">
+    <button class="submit-btn" (click)="sendRequest()">Submit</button>
+    <a [href]="redirectUrl" target="_blank" class="redirect-btn" *ngIf="redirectUrl">Redirect Url</a>
+  </div>
 </div>

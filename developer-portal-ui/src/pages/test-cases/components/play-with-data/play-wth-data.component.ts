@@ -29,6 +29,7 @@ export class PlayWthDataComponent implements OnInit {
   cancellationId = '';
   consentId = '';
   authorisationId = '';
+  redirectUrl = '';
 
   paymentServiceSelect = ['payments', 'bulk-payments', 'periodic-payments'];
   paymentProductSelect = [
@@ -89,9 +90,11 @@ export class PlayWthDataComponent implements OnInit {
         .subscribe(
           resp => {
             this.response = Object.assign(resp);
+            if (this.response['body']._links.hasOwnProperty('scaRedirect')) {
+              this.redirectUrl += this.response['body']._links.scaRedirect.href;
+            }
             this.dataService.isLoading = false;
             this.dataService.showToast('Request sent', 'Success!', 'success');
-            console.log('response:', JSON.stringify(this.response));
           },
           err => {
             this.dataService.isLoading = false;
