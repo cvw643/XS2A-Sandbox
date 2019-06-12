@@ -74,7 +74,7 @@ export class CustomizeService {
 
   public getJSON(): Promise<Theme> {
     return this.http
-      .get('../assets/UI/UITheme.json')
+      .get('../assets/UI/custom/UITheme.json')
       .toPromise()
       .then(data => {
         let theme = data;
