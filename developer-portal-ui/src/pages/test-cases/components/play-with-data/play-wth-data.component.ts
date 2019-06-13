@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RestService } from '../../../../services/rest.service';
 import { DataService } from '../../../../services/data.service';
 import { getStatusText } from 'http-status-codes';
+import { pathOr } from 'ramda';
 
 @Component({
   selector: 'app-play-wth-data',
@@ -92,7 +93,6 @@ export class PlayWthDataComponent implements OnInit {
             this.response = Object.assign(resp);
             this.dataService.isLoading = false;
             this.dataService.showToast('Request sent', 'Success!', 'success');
-            console.log('response:', JSON.stringify(this.response));
           },
           err => {
             this.dataService.isLoading = false;
@@ -161,6 +161,34 @@ export class PlayWthDataComponent implements OnInit {
     }
 
     document.body.removeChild(textArea);
+  }
+
+  getCopyValue(i) {
+    let r = pathOr('', ['body', this.fieldsToCopy[i]], this.response);
+
+    if (r === '') {
+      const h = pathOr(null, ['body', '_links', 'updatePsuAuthentication', 'href'], this.response);
+      if (h) {
+        r = this._getLinkParam(h, i);
+      } else if (i === 1) {
+        r = this.paymentId;
+      }
+    }
+
+    return r;
+  }
+
+  /**
+   * @param h - link
+   * @param i - index
+   */
+  private _getLinkParam(h, i) {
+    const linkParts = h.split('/');
+    if (i === 0) {
+      return linkParts[linkParts.length - 1];
+    } else {
+      return linkParts[linkParts.length - 3];
+    }
   }
 
   ngOnInit() {
