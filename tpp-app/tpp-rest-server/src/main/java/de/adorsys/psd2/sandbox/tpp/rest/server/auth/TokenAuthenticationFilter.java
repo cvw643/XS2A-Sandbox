@@ -59,7 +59,6 @@ public class TokenAuthenticationFilter extends AbstractAuthFilter {
         chain.doFilter(request, response);
     }
 
-
     private String resolveBearerToken(HttpServletRequest request) {
         return Optional.ofNullable(obtainFromHeader(request, AUTHORIZATION_HEADER))
                    .filter(StringUtils::isNotBlank)
