@@ -23,7 +23,6 @@ export class AutoLogoutService {
   }
 
   initializeTokenMonitoring(): void {
-    console.log('***', this.tokenMonitoringInitialized);
     if (!this.tokenMonitoringInitialized) {
       this.timerSubject = new BehaviorSubject('👌🏼');
       this.subscriptions = this.timer.subscribe(time => this.timerSubject.next(time + ' 🙈'));

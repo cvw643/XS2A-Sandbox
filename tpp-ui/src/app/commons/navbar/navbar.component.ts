@@ -22,9 +22,8 @@ export class NavbarComponent implements OnInit {
     // subscribe every minute and check if token is still valid
     startTokenMonitoring(): void {
         this.subscription = this.autoLogoutService.timerSubject.subscribe(time => {
-            console.log(time);
             if (!this.authService.isLoggedIn()) {
-                this.authService.logout();
+              this.onLogout();
             }
         })
     }
