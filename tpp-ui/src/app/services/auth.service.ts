@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {catchError, map} from "rxjs/operators";
-import {BehaviorSubject, interval, Observable, of, timer} from "rxjs";
+import { Observable, of} from "rxjs";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Credentials} from "../models/credentials.model";
 import {User} from "../models/user.model";
 import {Router} from "@angular/router";
+import {AutoLogoutService} from "./auto-logout.service";
 
 @Injectable({
     providedIn: 'root'
@@ -14,14 +15,10 @@ import {Router} from "@angular/router";
 export class AuthService {
 
     public url = `${environment.staffAccessResourceEndPoint}`;
-    // check every minute if token is valid. --> look app.component.ts
-    timer = interval(60000);
-    timerSubject = new BehaviorSubject(0);
     private authTokenStorageKey = 'token';
     private jwtHelperService = new JwtHelperService();
 
-    constructor(private http: HttpClient, private router: Router) {
-        this.timer.subscribe(time => this.timerSubject.next(time));
+    constructor(private http: HttpClient, private router: Router, private autoLogoutService: AutoLogoutService) {
     }
 
     authorize(credentials: Credentials): Observable<string> {
@@ -34,6 +31,7 @@ export class AuthService {
     login(credentials: any): Observable<boolean> {
         return this.authorize(credentials).pipe(
             map(jwt => {
+                this.autoLogoutService.initializeTokenMonitoring();
                 localStorage.setItem(this.authTokenStorageKey, jwt);
                 return true;
             }),
@@ -46,6 +44,7 @@ export class AuthService {
     }
 
     logout() {
+        this.autoLogoutService.resetMonitoringConfig();
         localStorage.removeItem(this.authTokenStorageKey);
         this.router.navigate(['/logout']);
     }
