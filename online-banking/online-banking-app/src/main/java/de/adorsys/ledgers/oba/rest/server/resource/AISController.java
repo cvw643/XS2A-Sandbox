@@ -278,7 +278,10 @@ public class AISController extends AbstractXISController implements AISApi {
             cmsPsuAisClient.confirmConsent(workflow.consentId(), psuId, null, null, null, CmsPsuAisClient.DEFAULT_SERVICE_INSTANCE_ID);
             updateScaStatusConsentStatusConsentData(psuId, workflow);
 
-            responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
+            // if consent is not partially authorized
+            if (workflow.getScaResponse().getBearerToken() != null) {
+                responseUtils.setCookies(response, workflow.getConsentReference(), workflow.bearerToken().getAccess_token(), workflow.bearerToken().getAccessTokenObject());
+            }
 
             scaStatus = workflow.getAuthResponse().getScaStatus();
             return ResponseEntity.ok(workflow.getAuthResponse());
