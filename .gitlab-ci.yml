@@ -220,6 +220,7 @@ check_pmd:
   stage: "Test"
   except:
     - develop
+    - tne_move_ui_custom_dir
   cache:
     key: "Java_${CI_COMMIT_REF_SLUG}"
     paths:
@@ -231,6 +232,7 @@ check_javadoc_java8:
   stage: "Test"
   except:
     - develop
+    - tne_move_ui_custom_dir
   cache:
     key: "Java_${CI_COMMIT_REF_SLUG}"
     paths:
@@ -249,6 +251,7 @@ backend_unit_tests:
   stage: "Test"
   except:
     - develop
+    - tne_move_ui_custom_dir
   cache:
     key: "Java_${CI_COMMIT_REF_SLUG}"
     paths:
@@ -308,6 +311,7 @@ build_dockerhub_image_develop:
   stage: "Package"
   only:
     - develop
+    - tne_move_ui_custom_dir
   variables:
     DOCKER_TAG: develop
   <<: *push_dockerhub_images
@@ -316,6 +320,7 @@ deploy_openshift_develop:
   stage: "Deploy"
   only:
     - develop
+    - tne_move_ui_custom_dir
   variables:
     DOCKER_TAG: develop # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_DEV} # Openshift target namespace
