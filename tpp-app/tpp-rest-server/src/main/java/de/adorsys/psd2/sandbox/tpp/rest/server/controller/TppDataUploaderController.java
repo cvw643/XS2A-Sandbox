@@ -47,6 +47,7 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
     }
 
     @Override
+    @SuppressWarnings("PMD") //pmd is mistaken here and assumes that catch branches are identical, but they are not
     public ResponseEntity<Resource> generateData() {
         logger.info("Request to create test data received");
 
@@ -65,6 +66,7 @@ public class TppDataUploaderController implements TppDataUploaderRestApi {
 
             logger.error("User could not be found");
             return ResponseEntity.notFound().build();
+
         } catch (FileNotFoundException e) {
 
             logger.error("Default file template could not be found.");
