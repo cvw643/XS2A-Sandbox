@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RestService } from '../../../../services/rest.service';
 import { DataService } from '../../../../services/data.service';
 import { getStatusText } from 'http-status-codes';
+import { CopyService } from '../../../../services/copy.service';
 
 @Component({
   selector: 'app-play-wth-data',
@@ -23,6 +24,7 @@ export class PlayWthDataComponent implements OnInit {
   @Input() consentIdFlag: boolean;
   @Input() authorisationIdFlag: boolean;
   @Input() variablePathEnd: string;
+  @Input() fieldsToCopy: string[];
 
   response: object = {};
   finalUrl: string;
@@ -52,7 +54,8 @@ export class PlayWthDataComponent implements OnInit {
 
   constructor(
     public restService: RestService,
-    public dataService: DataService
+    public dataService: DataService,
+    public copyService: CopyService
   ) {}
 
   /**
@@ -142,6 +145,7 @@ export class PlayWthDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('fields', this.fieldsToCopy);
     this.paymentService = this.paymentServiceFlag ? 'payments' : '';
     this.paymentProduct = this.paymentProductFlag
       ? '/sepa-credit-transfers'
@@ -153,5 +157,6 @@ export class PlayWthDataComponent implements OnInit {
     this.accountId = this.accountIdFlag ? 'accountId' : '';
     this.transactionId = this.transactionIdFlag ? 'transactionId' : '';
     this.bookingStatus = this.bookingStatusFlag ? 'booked' : '';
+    this.fieldsToCopy = this.fieldsToCopy ? this.fieldsToCopy : [];
   }
 }
