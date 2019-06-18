@@ -5,15 +5,13 @@ import de.adorsys.ledgers.middleware.api.domain.payment.AmountTO;
 import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.AccountMgmtStaffRestClient;
-import de.adorsys.ledgers.middleware.client.rest.AuthRequestInterceptor;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtStaffRestClient;
-import de.adorsys.psd2.sandbox.tpp.rest.server.controller.TppDataUploaderController;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.AccountBalance;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.UploadedData;
 import feign.FeignException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,25 +21,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class RestExecutionService {
-    private static final Logger logger = LoggerFactory.getLogger(TppDataUploaderController.class);
-
-    private final AuthRequestInterceptor authRequestInterceptor;
     private final AccountMgmtStaffRestClient accountRestClient;
     private final UserMgmtStaffRestClient userRestClient;
 
-    public RestExecutionService(AuthRequestInterceptor authRequestInterceptor, AccountMgmtStaffRestClient accountRestClient, UserMgmtStaffRestClient userRestClient) {
-        this.authRequestInterceptor = authRequestInterceptor;
-        this.accountRestClient = accountRestClient;
-        this.userRestClient = userRestClient;
-    }
-
-    public boolean updateLedgers(String bearerToken, DataPayload payload) {
-        authRequestInterceptor.setAccessToken(bearerToken);
+    public boolean updateLedgers(DataPayload payload) {
         boolean result = doUpdate(payload);
-        authRequestInterceptor.setAccessToken(null);
-        logger.info("Result of update is: {}", result ? "success" : "failure");
+        log.info("Result of update is: {}", result ? "success" : "failure");
         return result;
     }
 
@@ -52,7 +41,7 @@ public class RestExecutionService {
 
     private UploadedData initialiseDataSets(DataPayload payload) {
         List<UserTO> users = Optional.ofNullable(payload.getUsers())
-                                     .orElse(Collections.emptyList());
+                                 .orElse(Collections.emptyList());
         Map<String, AccountDetailsTO> accounts = getAccountsForUploadedData(payload);
         Map<String, AccountBalance> balances = getBalancesForUploadedData(payload);
 
@@ -61,16 +50,16 @@ public class RestExecutionService {
 
     private Map<String, AccountBalance> getBalancesForUploadedData(DataPayload payload) {
         return Optional.ofNullable(payload.getBalancesList())
-                       .orElse(Collections.emptyList())
-                       .stream()
-                       .collect(Collectors.toMap(AccountBalance::getIban, b -> b));
+                   .orElse(Collections.emptyList())
+                   .stream()
+                   .collect(Collectors.toMap(AccountBalance::getIban, b -> b));
     }
 
     private Map<String, AccountDetailsTO> getAccountsForUploadedData(DataPayload payload) {
         return Optional.ofNullable(payload.getAccounts())
-                       .orElse(Collections.emptyList())
-                       .stream()
-                       .collect(Collectors.toMap(AccountDetailsTO::getIban, a -> a));
+                   .orElse(Collections.emptyList())
+                   .stream()
+                   .collect(Collectors.toMap(AccountDetailsTO::getIban, a -> a));
     }
 
     private boolean updateUsers(UploadedData data) {
@@ -81,33 +70,33 @@ public class RestExecutionService {
                 String msg = String.format("User: %s probably already exists", user.getLogin());
                 if (f.status() == 500 || f.status() == 403) {
                     msg = String.format("Connection problem %s", f.getMessage());
-                    logger.error(msg);
+                    log.error(msg);
                     return false;
                 }
-                logger.error(msg);
+                log.error(msg);
             }
             Optional.ofNullable(user)
-                    .ifPresent(u -> {
-                        if (!data.getDetails().isEmpty()) {
-                            createAccountsForUser(u.getId(), u.getAccountAccesses(), data.getDetails());
-                        }
-                    });
+                .ifPresent(u -> {
+                    if (!data.getDetails().isEmpty()) {
+                        createAccountsForUser(u.getId(), u.getAccountAccesses(), data.getDetails());
+                    }
+                });
         }
         return true;
     }
 
     private void createAccountsForUser(String userId, List<AccountAccessTO> accesses, Map<String, AccountDetailsTO> details) {
         accesses.stream()
-                .filter(access -> details.containsKey(access.getIban()))
-                .map(a -> details.get(a.getIban()))
-                .forEach(account -> createAccount(userId, account));
+            .filter(access -> details.containsKey(access.getIban()))
+            .map(a -> details.get(a.getIban()))
+            .forEach(account -> createAccount(userId, account));
     }
 
     private void createAccount(String userId, AccountDetailsTO account) {
         try {
             accountRestClient.createDepositAccountForUser(userId, account);
         } catch (FeignException f) {
-            logger.error("Account: {} {} creation error, probably it already exists", account.getIban(), account.getCurrency());
+            log.error("Account: {} {} creation error, probably it already exists", account.getIban(), account.getCurrency());
         }
     }
 
@@ -117,12 +106,12 @@ public class RestExecutionService {
         }
         try {
             List<AccountDetailsTO> accountsAtLedgers = Optional.ofNullable(accountRestClient.getListOfAccounts().getBody())
-                                                               .orElse(Collections.emptyList());
+                                                           .orElse(Collections.emptyList());
             accountsAtLedgers
-                    .forEach(a -> updateBalanceIfPresent(a, data.getBalances()));
+                .forEach(a -> updateBalanceIfPresent(a, data.getBalances()));
             return true;
         } catch (FeignException e) {
-            logger.error("Could not retrieve accounts from Ledgers");
+            log.error("Could not retrieve accounts from Ledgers");
             return false;
         }
     }
@@ -130,10 +119,10 @@ public class RestExecutionService {
     private void updateBalanceIfPresent(AccountDetailsTO detail, Map<String, AccountBalance> balances) {
         try {
             Optional.ofNullable(accountRestClient.getAccountDetailsById(detail.getId()).getBody())
-                    .ifPresent(d -> calculateDifAndUpdate(d, Optional.ofNullable(balances.get(d.getIban()))
-                                                                     .orElse(getZeroBalance(d))));
+                .ifPresent(d -> calculateDifAndUpdate(d, Optional.ofNullable(balances.get(d.getIban()))
+                                                             .orElse(getZeroBalance(d))));
         } catch (FeignException f) {
-            logger.error("Could not retrieve balances for account: {}", detail.getIban());
+            log.error("Could not retrieve balances for account: {}", detail.getIban());
         }
     }
 
@@ -149,7 +138,7 @@ public class RestExecutionService {
             try {
                 accountRestClient.depositCash(detail.getId(), amount);
             } catch (FeignException f) {
-                logger.error("Could not update balances for: {} with amount: {}", detail.getIban(), amount);
+                log.error("Could not update balances for: {} with amount: {}", detail.getIban(), amount);
             }
         }
     }

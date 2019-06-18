@@ -1,11 +1,8 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.service;
 
 import de.adorsys.ledgers.middleware.api.domain.account.AccountDetailsTO;
-import de.adorsys.ledgers.middleware.api.domain.um.AccessTokenTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
-import de.adorsys.ledgers.middleware.api.exception.UserNotFoundMiddlewareException;
-import de.adorsys.ledgers.um.api.exception.UserNotFoundException;
-import de.adorsys.ledgers.um.api.service.UserService;
+import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.AccountBalance;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
 import de.adorsys.psd2.sandbox.tpp.rest.server.utils.IbanGenerator;
@@ -13,44 +10,44 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TestsDataGenerationService {
-
-    private final AccessTokenTO accessToken;
-    private final UserService userService;
     private final ParseService parseService;
     private final RestExecutionService executionService;
+    private final UserMgmtRestClient userMgmtRestClient;
 
-    public byte[] generate(String token) throws UserNotFoundMiddlewareException, FileNotFoundException {
-        try {
-            String branch = userService.findByLogin(accessToken.getLogin()).getBranch();
-            DataPayload dataPayload = parseService.getDefaultData()
-                                              .map(d -> generateData(d, branch))
-                                              .orElseThrow(() -> new FileNotFoundException("Seems no data is present in file!"));
-            executionService.updateLedgers(token, dataPayload);
-            return parseService.getFile(dataPayload);
-        } catch (UserNotFoundException e) {
-            throw new UserNotFoundMiddlewareException(e);
-        }
+    public byte[] generate() {
+        UserTO userTO = userMgmtRestClient.getUser()
+                            .getBody();
+
+        String branch = Optional.ofNullable(userTO)
+                            .map(UserTO::getBranch)
+                            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        DataPayload dataPayload = parseService.getDefaultData()
+                                      .map(d -> generateData(d, branch))
+                                      .orElseThrow(() -> new RuntimeException("Seems no data is present in file!"));
+
+        executionService.updateLedgers(dataPayload);
+        return parseService.getFile(dataPayload);
     }
 
     private DataPayload generateData(DataPayload data, String branch) {
         Map<String, AccountDetailsTO> detailsMap = getNotNullList(data.getAccounts()).stream()
-                                                           .map(a -> generateDetails(a, branch))
-                                                           .collect(Collectors.toMap(this::getLastTwoSymbols, a -> a));
+                                                       .map(a -> generateDetails(a, branch))
+                                                       .collect(Collectors.toMap(this::getLastTwoSymbols, a -> a));
         data.setAccounts(new ArrayList<>(detailsMap.values()));
         List<AccountBalance> balances = getNotNullList(data.getBalancesList()).stream()
-                                                .map(b -> generateBalances(b, branch, detailsMap))
-                                                .collect(Collectors.toList());
+                                            .map(b -> generateBalances(b, branch, detailsMap))
+                                            .collect(Collectors.toList());
         data.setBalancesList(balances);
         List<UserTO> users = getNotNullList(data.getUsers()).stream()
-                                     .map(u -> generateUsers(u, branch, detailsMap))
-                                     .collect(Collectors.toList());
+                                 .map(u -> generateUsers(u, branch, detailsMap))
+                                 .collect(Collectors.toList());
         data.setUsers(users);
         return data;
     }
@@ -62,7 +59,7 @@ public class TestsDataGenerationService {
     @NotNull
     private String getLastTwoSymbols(AccountDetailsTO a) {
         return a.getIban()
-                       .substring(a.getIban().length() - 2);
+                   .substring(a.getIban().length() - 2);
     }
 
     private AccountBalance generateBalances(AccountBalance balance, String branch, Map<String, AccountDetailsTO> detailsMap) {
@@ -82,9 +79,9 @@ public class TestsDataGenerationService {
         user.setEmail(addBranchPrefix(branch, user.getEmail()));
         user.setLogin(addBranchPrefix(branch, user.getLogin()));
         user.getScaUserData()
-                .forEach(d -> d.setMethodValue(addBranchPrefix(branch, d.getMethodValue())));
+            .forEach(d -> d.setMethodValue(addBranchPrefix(branch, d.getMethodValue())));
         user.getAccountAccesses()
-                .forEach(a -> a.setIban(getGeneratedIbanOrNew(a.getIban(), branch, detailsMap)));
+            .forEach(a -> a.setIban(getGeneratedIbanOrNew(a.getIban(), branch, detailsMap)));
         return user;
     }
 
@@ -99,7 +96,7 @@ public class TestsDataGenerationService {
 
     private String getGeneratedIbanOrNew(String iban, String branch, Map<String, AccountDetailsTO> detailsMap) {
         return detailsMap.containsKey(iban)
-                       ? detailsMap.get(iban).getIban()
-                       : generateIban(branch, iban);
+                   ? detailsMap.get(iban).getIban()
+                   : generateIban(branch, iban);
     }
 }
