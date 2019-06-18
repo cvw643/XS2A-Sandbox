@@ -18,8 +18,8 @@ public class TppAccountsController implements TppAccountsRestApi {
 
 
     @Override
-    public void create(String userId, AccountDetailsTO account) {
-
+    public ResponseEntity<Void> create(String userId, AccountDetailsTO account) {
+        return accountMgmtStaffRestClient.createDepositAccountForUser(userId, account);
     }
 
     @Override

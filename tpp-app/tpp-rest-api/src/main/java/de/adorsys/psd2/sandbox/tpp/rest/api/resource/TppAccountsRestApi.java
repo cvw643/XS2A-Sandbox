@@ -19,7 +19,7 @@ public interface TppAccountsRestApi {
         notes = "Endpoint to create a deposit account for a user with given ID",
         authorizations = @Authorization(value = "apiKey"))
     @PostMapping()
-    void create(@RequestParam(value = "userId") String userId, @RequestBody AccountDetailsTO account);
+    ResponseEntity<Void> create(@RequestParam(value = "userId") String userId, @RequestBody AccountDetailsTO account);
 
     /**
      * Returns the list of accounts that belong to the same branch as STAFF user.
