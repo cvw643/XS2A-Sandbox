@@ -18,7 +18,7 @@ public interface TppAccountsRestApi {
     @ApiOperation(value = "Create account for a given user",
         notes = "Endpoint to a deposit account for a user with given ID",
         authorizations = @Authorization(value = "apiKey"))
-    @PostMapping()
+    @PostMapping
     ResponseEntity<Void> createAccount(@RequestParam(value = "userId") String userId, @RequestBody AccountDetailsTO account);
 
     /**

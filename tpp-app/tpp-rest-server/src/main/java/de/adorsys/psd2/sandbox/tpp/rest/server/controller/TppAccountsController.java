@@ -16,7 +16,6 @@ import java.util.List;
 public class TppAccountsController implements TppAccountsRestApi {
     private final AccountMgmtStaffRestClient accountMgmtStaffRestClient;
 
-
     @Override
     public ResponseEntity<Void> createAccount(String userId, AccountDetailsTO account) {
         return accountMgmtStaffRestClient.createDepositAccountForUser(userId, account);
