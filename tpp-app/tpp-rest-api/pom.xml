@@ -11,6 +11,7 @@
 
     <properties>
         <ruleset.basedir>../..</ruleset.basedir>
+        <ledgers.version>0.3.8</ledgers.version>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
@@ -40,8 +41,7 @@
         <dependency>
             <groupId>de.adorsys.ledgers</groupId>
             <artifactId>ledgers-middleware-service-api</artifactId>
-            <version>0.4-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>${ledgers.version}</version>
         </dependency>
 
     </dependencies>
