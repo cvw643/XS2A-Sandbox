@@ -16,10 +16,10 @@ public interface TppAccountsRestApi {
     String BASE_PATH = "/tpp/accounts";
 
     @ApiOperation(value = "Create account for a given user",
-        notes = "Endpoint to create a deposit account for a user with given ID",
+        notes = "Endpoint to a deposit account for a user with given ID",
         authorizations = @Authorization(value = "apiKey"))
     @PostMapping()
-    ResponseEntity<Void> create(@RequestParam(value = "userId") String userId, @RequestBody AccountDetailsTO account);
+    ResponseEntity<Void> createAccount(@RequestParam(value = "userId") String userId, @RequestBody AccountDetailsTO account);
 
     /**
      * Returns the list of accounts that belong to the same branch as STAFF user.
@@ -33,5 +33,5 @@ public interface TppAccountsRestApi {
         @ApiResponse(code = 200, response = AccountDetailsTO[].class, message = "List of accounts accessible to the TPP.")
     })
     @GetMapping
-    ResponseEntity<List<AccountDetailsTO>> getAll();
+    ResponseEntity<List<AccountDetailsTO>> getAllAccounts();
 }
