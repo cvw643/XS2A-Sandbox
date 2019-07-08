@@ -63,7 +63,6 @@ export class AccountAccessManagementComponent implements OnInit {
         }
 
         this.accountAccessForm.get('iban').setValue(this.account.iban);
-        console.log(this.accountAccessForm.getRawValue());
         this.accountService.updateAccountAccessForUser(this.accountAccessForm.getRawValue()).subscribe(response => {
             console.log(response);
         }, error => {
