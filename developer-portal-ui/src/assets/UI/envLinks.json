@@ -1,0 +1,38 @@
+{
+  "local": [
+    {
+      "name": "developerPortal",
+      "link": "http://localhost:4206"
+    },
+    {
+      "name": "xs2aInterfaceSwagger",
+      "link": "http://localhost:8089/swagger-ui.html"
+    },
+    {
+      "name": "consentManagementSystem",
+      "link": "http://localhost:38080/swagger-ui.html"
+    },
+    {
+      "name": "ledgers",
+      "link": "http://localhost:8088/swagger-ui.html"
+    }
+  ],
+  "production": [
+    {
+      "name": "developerPortal",
+      "link": "http://localhost:4206"
+    },
+    {
+      "name": "xs2aInterfaceSwagger",
+      "link": "http://localhost:8089/swagger-ui.html"
+    },
+    {
+      "name": "consentManagementSystem",
+      "link": "http://localhost:38080/swagger-ui.html"
+    },
+    {
+      "name": "ledgers",
+      "link": "http://localhost:8088/swagger-ui.html"
+    }
+  ]
+}
