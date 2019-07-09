@@ -9,10 +9,8 @@ import { saveAs } from 'file-saver';
 })
 export class GettingStartedComponent implements OnInit {
   defaultTheme: Theme;
-  constructor(private customizeService: CustomizeService) {
-    this.defaultTheme = customizeService.getTheme('default');
-    this.defaultTheme.globalSettings.logo = 'Logo_XS2ASandbox.png';
-  }
+
+  constructor(private customizeService: CustomizeService) {}
 
   exportTheme() {
     const blob = new Blob([JSON.stringify(this.defaultTheme, null, 2)], {
@@ -21,5 +19,7 @@ export class GettingStartedComponent implements OnInit {
     saveAs(blob, 'exampleTheme');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.defaultTheme = this.customizeService.getTheme('default');
+  }
 }
