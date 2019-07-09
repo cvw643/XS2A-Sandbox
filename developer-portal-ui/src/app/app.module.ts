@@ -24,10 +24,10 @@ import { AccinfTransactionsGetComponent } from '../pages/test-cases/components/a
 import { AccinfTransactionGetComponent } from '../pages/test-cases/components/api-endpoints/accinf-transaction-get/accinf-transaction-get.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../services/translate.factory';
-import { SettingsHttpService } from '../services/settings-http.service';
+import { SettingsLoadService } from '../services/settings-load.service';
 
-export function app_Init(settingsHttpService: SettingsHttpService) {
-  return () => settingsHttpService.initializeApp();
+export function app_Init(settingsLoadService: SettingsLoadService) {
+  return () => settingsLoadService.initializeApp();
 }
 
 @NgModule({
@@ -70,7 +70,7 @@ export function app_Init(settingsHttpService: SettingsHttpService) {
     {
       provide: APP_INITIALIZER,
       useFactory: app_Init,
-      deps: [SettingsHttpService],
+      deps: [SettingsLoadService],
       multi: true,
     },
     RestService,

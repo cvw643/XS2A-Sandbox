@@ -6,7 +6,7 @@ import { EnvLink } from '../models/envLinks.model';
 @Injectable({
   providedIn: 'root',
 })
-export class SettingsHttpService {
+export class SettingsLoadService {
   constructor(
     private http: HttpClient,
     private settingsService: SettingsService
@@ -17,8 +17,19 @@ export class SettingsHttpService {
       this.http
         .get('assets/UI/envLinks.json')
         .toPromise()
-        .then(response => {
-          this.settingsService.settings.envLinks = response as EnvLink[];
+        .then(settings => {
+          if (settings instanceof Array) {
+            for (let i = 0; i < settings.length; i++) {
+              if (!(settings[i] instanceof EnvLink)) {
+                this.settingsService.fallbackToDefault();
+                break;
+              }
+            }
+            this.settingsService.settings.envLinks = settings as EnvLink[];
+          } else {
+            this.settingsService.fallbackToDefault();
+          }
+
           resolve();
         });
     });
