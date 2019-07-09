@@ -1,8 +1,8 @@
-import { EnvLinks } from './envLinks.model';
+import { EnvLink } from './envLinks.model';
 
 export class Settings {
   constructor() {
-    this.envLinks = new EnvLinks();
+    this.envLinks = [];
   }
-  envLinks: EnvLinks;
+  envLinks: EnvLink[];
 }

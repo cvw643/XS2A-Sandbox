@@ -1,4 +1,5 @@
-export class EnvLinks {
+export class EnvLink {
   name: string;
-  link: string;
+  localEnvironmentLink: string;
+  productionEnvironmentLink: string;
 }

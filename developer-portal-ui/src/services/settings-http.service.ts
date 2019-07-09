@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SettingsService } from './settings.service';
-import { EnvLinks } from '../models/envLinks.model';
+import { EnvLink } from '../models/envLinks.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,7 @@ export class SettingsHttpService {
         .get('assets/UI/envLinks.json')
         .toPromise()
         .then(response => {
-          console.log(this.settingsService.settings);
-          this.settingsService.settings.envLinks = <EnvLinks>response;
+          this.settingsService.settings.envLinks = response as EnvLink[];
           resolve();
         });
     });
