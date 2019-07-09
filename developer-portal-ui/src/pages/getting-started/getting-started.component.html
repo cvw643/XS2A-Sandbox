@@ -214,7 +214,29 @@
       <span>{{ 'GETTING_STARTED.LINKS_TO.TABLE.R1_C3' | translate }}</span>
     </div>
 
-    <div *ngFor="let link of settings" class="links-to-environments">
+    <div
+      *ngFor="let link of settings.envLinks; let i = index"
+      class="links-to-environments"
+      [ngClass]="i % 2 == 0 ? '' : 'bg'"
+    >
+      <span>{{
+        'GETTING_STARTED.LINKS_TO.TABLE.' + link.name | translate
+      }}</span>
+
+      <span>
+        <a target="_blank" href="{{link.localEnvironmentLink}}">
+          {{ link.localEnvironmentLink }}
+        </a>
+      </span>
+
+      <span>
+        <a target="_blank" href="{{link.productionEnvironmentLink}}">
+          {{ link.productionEnvironmentLink }}
+        </a>
+      </span>
+    </div>
+
+    <div class="links-to-environments">
       <span>{{ 'GETTING_STARTED.LINKS_TO.TABLE.R4' | translate }}</span>
       <span>
         <a target="_blank" href="http://localhost:38080/swagger-ui.html">
@@ -227,25 +249,6 @@
           href="https://demo-dynamicsandbox-cms.cloud.adorsys.de"
         >
           https://demo-dynamicsandbox-cms.cloud.adorsys.de
-        </a>
-      </span>
-    </div>
-
-    <div
-      *ngFor="let link of settings.envLinks; let i = index"
-      class="links-to-environments"
-      [ngClass]="i % 2 == 0 ? '' : 'bg'"
-    >
-      <span>{{ 'GETTING_STARTED.LINKS_TO.TABLE.R2' | translate }}</span>
-      <span>
-        <a target="_blank" href="{{link.localEnvironmentLink}}">
-          {{ link.localEnvironmentLink }}
-        </a>
-      </span>
-
-      <span>
-        <a target="_blank" href="{{link.productionEnvironmentLink}}">
-          {{ link.productionEnvironmentLink }}
         </a>
       </span>
     </div>
