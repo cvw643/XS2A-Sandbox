@@ -20,7 +20,6 @@ public class PiisOneScaMethodIT extends AbstractPiis {
     }
 
     @Test
-    @Ignore //TODO FIX THIS TEST
     public void test_cif() {
         // Login
         ResponseEntity<AuthorizeResponse> login = cifHelper.login();
