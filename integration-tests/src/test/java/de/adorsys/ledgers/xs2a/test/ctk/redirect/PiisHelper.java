@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import de.adorsys.ledgers.xs2a.client.FundsConfirmationApiClient;
 import de.adorsys.ledgers.xs2a.client.FundsConfirmationResponse;
+import de.adorsys.psd2.model.InlineResponse200;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.springframework.http.HttpStatus;
@@ -124,15 +125,13 @@ public class PiisHelper {
 	}
 
 	private CreatePiisConsentRequestTO dedicatedConsent() {
-		CreatePiisConsentRequestTO consents = new CreatePiisConsentRequestTO();
-		List<AccountReferenceTO> accounts = new ArrayList<>();
-		consents.setAccounts(accounts);
+		CreatePiisConsentRequestTO consent = new CreatePiisConsentRequestTO();
 		AccountReferenceTO ref = new AccountReferenceTO();
-		accounts.add(ref);
 		ref.setIban(iban);
 		ref.setCurrency(Currency.getInstance("EUR"));
-		consents.setAllowedFrequencyPerDay(4);
-		consents.setValidUntil(LocalDate.of(2021, 11, 30));
+		consent.setAccount(ref);
+		consent.setAllowedFrequencyPerDay(4);
+		consent.setValidUntil(LocalDate.of(2021, 11, 30));
 		TppInfo tppInfo = new TppInfo();
 		tppInfo.setAuthorisationNumber("12345987");// Took this from debugger
 		tppInfo.setAuthorityId(RandomStringUtils.randomNumeric(4));
@@ -140,11 +139,11 @@ public class PiisHelper {
 		// Ticket. What if this is null
 		tppInfo.setTppRoles(Collections.singletonList(TppRole.PIISP));
 		// ??
-		consents.setTppInfo(tppInfo);
-		return consents;
+		consent.setTppInfo(tppInfo);
+		return consent;
 	}
 
-	public ResponseEntity<FundsConfirmationResponse> confOfFund(ResponseEntity<AuthorizeResponse> authResponseWrapper) {
+	public ResponseEntity<InlineResponse200> confOfFund(ResponseEntity<AuthorizeResponse> authResponseWrapper) {
 		UUID xRequestID = UUID.randomUUID();
 		@Valid
 		ConfirmationOfFunds cof = new ConfirmationOfFunds();
@@ -159,7 +158,7 @@ public class PiisHelper {
 		cof.setCardNumber(iban);
 		cof.setPayee("Francis");
 		
-		ResponseEntity<FundsConfirmationResponse> availabilityOfFunds = fundsConfirmationApiClient._checkAvailabilityOfFunds(cof, xRequestID, digest, signature, tpPSignatureCertificate);
+		ResponseEntity<InlineResponse200> availabilityOfFunds = fundsConfirmationApiClient._checkAvailabilityOfFunds(cof, xRequestID, digest, signature, tpPSignatureCertificate);
 		return availabilityOfFunds;
 	}
 

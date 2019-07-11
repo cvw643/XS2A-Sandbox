@@ -29,8 +29,8 @@ public class CreatePiisConsentRequestTO {
     @ApiModelProperty(value = "Tpp for which the consent will be created. If the property is omitted, the consent will be created for all TPPs")
     private TppInfo tppInfo;
 
-    @ApiModelProperty(value = "Accounts for which the consent is created")
-    private List<AccountReferenceTO> accounts;
+    @ApiModelProperty(value = "Account, where the confirmation of funds service is aimed to be submitted to.")
+    private AccountReferenceTO account;
 
     @ApiModelProperty(value = "Consent`s expiration date. The content is the local ASPSP date in ISODate Format", example = "2020-10-10")
     private LocalDate validUntil;
@@ -38,36 +38,48 @@ public class CreatePiisConsentRequestTO {
     @ApiModelProperty(value = "Maximum frequency for an access per day. For a once-off access, this attribute is set to 1", required = true, example = "4")
     private int allowedFrequencyPerDay;
 
-	public TppInfo getTppInfo() {
-		return tppInfo;
-	}
+    @ApiModelProperty(value = "Card Number of the card issued by the PIISP. Should be delivered if available.", example = "1234567891234")
+    private String cardNumber;
 
-	public void setTppInfo(TppInfo tppInfo) {
-		this.tppInfo = tppInfo;
-	}
+    @ApiModelProperty(value = "Expiry date of the card issued by the PIISP", example = "2020-12-31")
+    private LocalDate cardExpiryDate;
 
-	public List<AccountReferenceTO> getAccounts() {
-		return accounts;
-	}
+    @ApiModelProperty(value = "Additional explanation for the card product.", example = "MyMerchant Loyalty Card")
+    private String cardInformation;
 
-	public void setAccounts(List<AccountReferenceTO> accounts) {
-		this.accounts = accounts;
-	}
+    @ApiModelProperty(value = "Additional information about the registration process for the PSU, e.g. a reference to the TPP / PSU contract.", example = "Your contract Number 1234 with MyMerchant is completed with the registration with your bank.")
+    private String registrationInformation;
 
-	public LocalDate getValidUntil() {
-		return validUntil;
-	}
+    public TppInfo getTppInfo() {
+        return tppInfo;
+    }
 
-	public void setValidUntil(LocalDate validUntil) {
-		this.validUntil = validUntil;
-	}
+    public void setTppInfo(TppInfo tppInfo) {
+        this.tppInfo = tppInfo;
+    }
 
-	public int getAllowedFrequencyPerDay() {
-		return allowedFrequencyPerDay;
-	}
+    public AccountReferenceTO getAccount() {
+        return account;
+    }
 
-	public void setAllowedFrequencyPerDay(int allowedFrequencyPerDay) {
-		this.allowedFrequencyPerDay = allowedFrequencyPerDay;
-	}
+    public void setAccount(AccountReferenceTO account) {
+        this.account = account;
+    }
+
+    public LocalDate getValidUntil() {
+        return validUntil;
+    }
+
+    public void setValidUntil(LocalDate validUntil) {
+        this.validUntil = validUntil;
+    }
+
+    public int getAllowedFrequencyPerDay() {
+        return allowedFrequencyPerDay;
+    }
+
+    public void setAllowedFrequencyPerDay(int allowedFrequencyPerDay) {
+        this.allowedFrequencyPerDay = allowedFrequencyPerDay;
+    }
 }
 
