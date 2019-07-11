@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -338,7 +339,7 @@ public class AISController extends AbstractXISController implements AISApi {
             AisConsentTO pisConsent = new AisConsentTO();
             AisAccountAccessInfoTO access = new AisAccountAccessInfoTO();
             // Only consent we take.
-            access.setBalances(piisConsentRequest.getAccounts().stream().map(a -> a.getIban()).collect(Collectors.toList()));
+            access.setBalances(Arrays.asList(piisConsentRequest.getAccount().getIban()));
             pisConsent.setAccess(access);
             pisConsent.setFrequencyPerDay(piisConsentRequest.getAllowedFrequencyPerDay());
             pisConsent.setId(cmsCcnsent.getConsentId());
