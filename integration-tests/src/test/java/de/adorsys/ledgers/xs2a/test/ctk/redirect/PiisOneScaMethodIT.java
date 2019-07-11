@@ -3,6 +3,7 @@ package de.adorsys.ledgers.xs2a.test.ctk.redirect;
 import de.adorsys.ledgers.oba.rest.api.domain.AuthorizeResponse;
 import de.adorsys.ledgers.oba.rest.api.domain.PIISConsentCreateResponse;
 import de.adorsys.ledgers.xs2a.client.FundsConfirmationResponse;
+import de.adorsys.psd2.model.InlineResponse200;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -27,13 +28,16 @@ public class PiisOneScaMethodIT extends AbstractPiis {
         // AuthCode
         ResponseEntity<AuthorizeResponse> authCode = cifHelper.authCode(login);
 
+        // create PIIS consent
         ResponseEntity<PIISConsentCreateResponse> createPiisConsent = cifHelper.createPiisConsent(authCode);
 
-        // TODO: fix this after https://git.adorsys.de/adorsys/xs2a/aspsp-xs2a/issues/648 addressed
-        ResponseEntity<FundsConfirmationResponse> confOfFund = cifHelper.confOfFund(authCode);
-        FundsConfirmationResponse inlineResponse200 = confOfFund.getBody();
-        Assert.assertNotNull(inlineResponse200);
+        // Availability of funds request
+        ResponseEntity<InlineResponse200> response = cifHelper.confOfFund(authCode);
+
+        // Assert body is not null
+        Assert.assertNotNull(response.getBody());
+
         // Intentional not null
-        Assert.assertNotNull(inlineResponse200.isFundsAvailable());
+        Assert.assertNotNull(response.getBody().isFundsAvailable());
     }
 }

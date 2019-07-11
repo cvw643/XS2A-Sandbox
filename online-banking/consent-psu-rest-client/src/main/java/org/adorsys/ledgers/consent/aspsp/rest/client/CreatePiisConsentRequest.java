@@ -16,13 +16,12 @@
 
 package org.adorsys.ledgers.consent.aspsp.rest.client;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import de.adorsys.psd2.xs2a.core.profile.AccountReference;
 import de.adorsys.psd2.xs2a.core.tpp.TppInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.time.LocalDate;
 
 @ApiModel(description = "Piis consent request", value = "PiisConsentRequest")
 public class CreatePiisConsentRequest {
@@ -50,38 +49,68 @@ public class CreatePiisConsentRequest {
     @ApiModelProperty(value = "Additional information about the registration process for the PSU, e.g. a reference to the TPP / PSU contract.", example = "Your contract Number 1234 with MyMerchant is completed with the registration with your bank.")
     private String registrationInformation;
 
-	public TppInfo getTppInfo() {
-		return tppInfo;
-	}
+    public TppInfo getTppInfo() {
+        return tppInfo;
+    }
 
-	public void setTppInfo(TppInfo tppInfo) {
-		this.tppInfo = tppInfo;
-	}
+    public void setTppInfo(TppInfo tppInfo) {
+        this.tppInfo = tppInfo;
+    }
 
-	public AccountReference getAccount() {
-		return account;
-	}
+    public AccountReference getAccount() {
+        return account;
+    }
 
-	public void setAccount(AccountReference account) {
-		this.account = account;
-	}
+    public void setAccount(AccountReference account) {
+        this.account = account;
+    }
 
-	public LocalDate getValidUntil() {
-		return validUntil;
-	}
+    public LocalDate getValidUntil() {
+        return validUntil;
+    }
 
-	public void setValidUntil(LocalDate validUntil) {
-		this.validUntil = validUntil;
-	}
+    public void setValidUntil(LocalDate validUntil) {
+        this.validUntil = validUntil;
+    }
 
-	public int getAllowedFrequencyPerDay() {
-		return allowedFrequencyPerDay;
-	}
+    public int getAllowedFrequencyPerDay() {
+        return allowedFrequencyPerDay;
+    }
 
-	public void setAllowedFrequencyPerDay(int allowedFrequencyPerDay) {
-		this.allowedFrequencyPerDay = allowedFrequencyPerDay;
-	}
+    public void setAllowedFrequencyPerDay(int allowedFrequencyPerDay) {
+        this.allowedFrequencyPerDay = allowedFrequencyPerDay;
+    }
 
+    public String getCardNumber() {
+        return cardNumber;
+    }
 
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public LocalDate getCardExpiryDate() {
+        return cardExpiryDate;
+    }
+
+    public void setCardExpiryDate(LocalDate cardExpiryDate) {
+        this.cardExpiryDate = cardExpiryDate;
+    }
+
+    public String getCardInformation() {
+        return cardInformation;
+    }
+
+    public void setCardInformation(String cardInformation) {
+        this.cardInformation = cardInformation;
+    }
+
+    public String getRegistrationInformation() {
+        return registrationInformation;
+    }
+
+    public void setRegistrationInformation(String registrationInformation) {
+        this.registrationInformation = registrationInformation;
+    }
 }
 

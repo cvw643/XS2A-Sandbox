@@ -16,13 +16,12 @@
 
 package de.adorsys.ledgers.oba.rest.api.domain;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import de.adorsys.ledgers.middleware.api.domain.account.AccountReferenceTO;
 import de.adorsys.psd2.xs2a.core.tpp.TppInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.time.LocalDate;
 
 @ApiModel(description = "Piis consent request", value = "PiisConsentRequest")
 public class CreatePiisConsentRequestTO {
@@ -81,5 +80,39 @@ public class CreatePiisConsentRequestTO {
     public void setAllowedFrequencyPerDay(int allowedFrequencyPerDay) {
         this.allowedFrequencyPerDay = allowedFrequencyPerDay;
     }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public LocalDate getCardExpiryDate() {
+        return cardExpiryDate;
+    }
+
+    public void setCardExpiryDate(LocalDate cardExpiryDate) {
+        this.cardExpiryDate = cardExpiryDate;
+    }
+
+    public String getCardInformation() {
+        return cardInformation;
+    }
+
+    public void setCardInformation(String cardInformation) {
+        this.cardInformation = cardInformation;
+    }
+
+    public String getRegistrationInformation() {
+        return registrationInformation;
+    }
+
+    public void setRegistrationInformation(String registrationInformation) {
+        this.registrationInformation = registrationInformation;
+    }
+
+
 }
 
