@@ -67,10 +67,9 @@ export class RegisterComponent implements OnInit {
             });
         } else {
             this.service.register(this.userForm.value)
-                .subscribe((response) => {
-                    console.log(response);
-                    // message = 'You have been successfully registered.';
-                    // this.navigateAndGiveFeedback('', message);
+                .subscribe(() => {
+                    message = 'You have been successfully registered.';
+                    this.navigateAndGiveFeedback('', message);
                 });
         }
     }
