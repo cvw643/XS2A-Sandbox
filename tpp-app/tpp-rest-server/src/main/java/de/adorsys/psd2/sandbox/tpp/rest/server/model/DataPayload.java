@@ -29,9 +29,9 @@ public class DataPayload {
     private Map<String, String> generatedIbans = new HashMap<>();
 
     public boolean isNotValidPayload() {
-        return CollectionUtils.filter(users, notNullPredicate()) ||
-                   CollectionUtils.filter(accounts, notNullPredicate()) ||
-                   CollectionUtils.filter(balancesList, notNullPredicate());
+        return CollectionUtils.isEmpty(users)
+                          || CollectionUtils.isEmpty(balancesList)
+                          || CollectionUtils.isEmpty(accounts);
     }
 
     public DataPayload updateIbanForBranch(String branch) {
