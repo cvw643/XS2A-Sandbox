@@ -30,4 +30,9 @@ public class TppUsersController implements TppUsersRestApi {
     public ResponseEntity<List<UserTO>> getAllUsers() {
         return userMgmtStaffRestClient.getBranchUsersByRoles(Arrays.asList(UserRoleTO.CUSTOMER));
     }
+
+    @Override
+    public ResponseEntity<UserTO> getUserById(String userId) {
+        return userMgmtStaffRestClient.getBranchUserById(userId);
+    }
 }

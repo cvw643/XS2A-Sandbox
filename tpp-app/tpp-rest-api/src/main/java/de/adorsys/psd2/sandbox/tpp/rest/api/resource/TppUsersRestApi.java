@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,4 +28,10 @@ public interface TppUsersRestApi {
         authorizations = @Authorization(value = "apiKey"))
     @GetMapping
     ResponseEntity<List<UserTO>> getAllUsers();
+
+    @ApiOperation(value = "Gets user by ID if it's within the branch",
+            notes = "Endpoint to get user user by ID ",
+            authorizations = @Authorization(value = "apiKey"))
+    @GetMapping("/{userId}")
+    ResponseEntity<UserTO> getUserById(@PathVariable("userId") String var1);
 }
