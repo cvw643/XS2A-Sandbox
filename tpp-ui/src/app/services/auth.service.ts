@@ -16,7 +16,7 @@ import {TppInfo} from "../models/tpp-info.model";
 export class AuthService {
 
     public url = `${environment.tppBackend}`;
-    private authTokenStorageKey = 'token';
+    private authTokenStorageKey = 'access_token';
     private jwtHelperService = new JwtHelperService();
 
     constructor(private http: HttpClient, private router: Router, private autoLogoutService: AutoLogoutService) {
@@ -31,14 +31,13 @@ export class AuthService {
             observe: 'response'
         })
             .pipe(
-                map(loginResponse => loginResponse.headers.get('access_token'))
+                map(loginResponse => loginResponse.headers.get(this.authTokenStorageKey))
             );
     }
 
     login(credentials: any): Observable<boolean> {
         return this.authorize(credentials).pipe(
             map(jwt => {
-                console.log(jwt);
                 // this.autoLogoutService.initializeTokenMonitoring();
                 localStorage.setItem(this.authTokenStorageKey, jwt);
                 return true;
