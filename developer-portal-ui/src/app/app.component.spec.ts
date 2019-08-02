@@ -48,11 +48,15 @@ describe('AppComponent', () => {
         resolve({
           globalSettings: {
             logo: '../assets/UI/Logo_XS2ASandbox.png',
-            fontFamily: 'Arial, sans-serif',
-            headerBG: '#ffffff',
-            headerFontColor: '#000000',
-            footerBG: '#054f72',
-            footerFontColor: '#ffffff',
+            cssVariables: {
+              colorPrimary: '#054f72',
+              colorSecondary: '#eed52f',
+              fontFamily: 'Arial, sans-serif',
+              headerBG: '#ffffff',
+              headerFontColor: '#000000',
+              footerBG: '#054f72',
+              footerFontColor: '#ffffff',
+            },
             facebook: 'https://www.facebook.com/adorsysGmbH/',
             linkedIn: 'https://www.linkedin.com/company/adorsys-gmbh-&-co-kg/',
           },
