@@ -3,7 +3,7 @@
 .divider {
   height: 0.5vw;
   width: 6vw;
-  background-color: #eed52f;
+  background-color: var(--colorSecondary);
 }
 
 .any-questions {
@@ -14,7 +14,7 @@
     opacity: 0.9;
     font-weight: 600;
     font-size: 2.8vw;
-    color: #054f72;
+    color: var(--colorPrimary);
   }
   .any-questions-subtitle {
     opacity: 0.9;
@@ -27,6 +27,7 @@
     height: 15vw;
     box-shadow: 0 1px 18px -12px #524c52;
     margin: 4vw 0;
+    background: #fff;
     .person-card-image-wrapper {
       background-color: #eeeeee;
       height: 100%;
@@ -60,12 +61,11 @@
             opacity: 0.9;
           }
           font-size: 0.9vw;
-          color: #054f72;
+          color: var(--colorPrimary);
         }
       }
       .sub-personal-info {
         a {
-          color: #0984bf;
           font-size: 1vw;
         }
       }
@@ -82,7 +82,7 @@
     opacity: 0.9;
     font-weight: 600;
     font-size: 2.8vw;
-    color: #054f72;
+    color: var(--colorPrimary);
   }
   .contacts-card {
     display: flex;
@@ -123,7 +123,6 @@
       }
       .sub-personal-info {
         a {
-          color: #0984bf;
           font-size: 1vw;
           margin-bottom: 1vw;
           i {
