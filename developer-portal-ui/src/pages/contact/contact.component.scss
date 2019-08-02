@@ -11,13 +11,11 @@
   margin: 5vw auto 0 auto;
   .any-questions-title {
     margin: 2vw 0 1vw 0;
-    opacity: 0.9;
     font-weight: 600;
     font-size: 2.8vw;
     color: var(--colorPrimary);
   }
   .any-questions-subtitle {
-    opacity: 0.9;
     font-size: 2.8vw;
     color: #868e96;
   }
@@ -58,7 +56,6 @@
             font-size: 2vw;
             font-weight: 600;
             color: #212529;
-            opacity: 0.9;
           }
           font-size: 0.9vw;
           color: var(--colorPrimary);
@@ -79,7 +76,6 @@
   margin: 5vw auto 0 auto;
   .contacts-title {
     margin: 2vw 0 1vw 0;
-    opacity: 0.9;
     font-weight: 600;
     font-size: 2.8vw;
     color: var(--colorPrimary);
@@ -91,7 +87,7 @@
     box-shadow: 0 1px 18px -12px #524c52;
     margin: 3vw 0;
     padding: 2vw;
-    background-color: #eeeeee;
+    background-color: var(--contactsCardBG);
     .contacts-content {
       min-width: 18.5vw;
       padding: 5% 3%;
@@ -111,7 +107,6 @@
             font-size: 1.5vw;
             font-weight: 600;
             color: #212529;
-            opacity: 0.9;
             margin-bottom: 1.2vw;
           }
           &:last-of-type {

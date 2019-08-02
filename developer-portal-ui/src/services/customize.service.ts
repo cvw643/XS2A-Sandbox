@@ -257,6 +257,10 @@ export interface CSSVariables {
   anchorFontColor?: string;
   anchorFontColorHover?: string;
   heroBG?: string;
+  stepBG?: string;
+  contactsCardBG?: string;
+  testCasesLeftSectionBG?: string;
+  testCasesRightSectionBG?: string;
 }
 
 export interface ContactInfo {
