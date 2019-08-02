@@ -6,46 +6,41 @@
   />
   <div class="nav">
     <div>
-      <span
+      <a
         class="header-item"
-        [ngStyle]="
-          dataService.getRouterUrl().includes('getting-started')
-            ? { opacity: 1 }
-            : ''
-        "
-        (click)="goToPage('getting-started')"
+        routerLink="/getting-started"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
       >
         {{ 'HEADER.GETTING_STARTED' | translate }}
-      </span>
-      <span
+      </a>
+      <a
         class="header-item"
-        [ngStyle]="
-          dataService.getRouterUrl().includes('test-cases')
-            ? { opacity: 1 }
-            : ''
-        "
-        (click)="goToPage('/test-cases/redirect')"
+        routerLink="/test-cases/redirect"
+        routerLinkActive="active"
+        [ngClass]="{
+          active: dataService.getRouterUrl().includes('test-cases')
+        }"
+        [routerLinkActiveOptions]="{ exact: false }"
       >
         {{ 'HEADER.TEST_CASES' | translate }}
-      </span>
-      <span
+      </a>
+      <a
         class="header-item"
-        [ngStyle]="
-          dataService.getRouterUrl().includes('faq') ? { opacity: 1 } : ''
-        "
-        (click)="goToPage('/faq')"
+        routerLink="/faq"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
       >
         {{ 'HEADER.FAQ' | translate }}
-      </span>
-      <span
+      </a>
+      <a
         class="header-item"
-        [ngStyle]="
-          dataService.getRouterUrl().includes('contact') ? { opacity: 1 } : ''
-        "
-        (click)="goToPage('/contact')"
+        routerLink="/contact"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
       >
         {{ 'HEADER.CONTACT' | translate }}
-      </span>
+      </a>
     </div>
     <div class="langs-wrapper">
       <div class="lang" (click)="collapseThis()">
@@ -85,18 +80,18 @@
       (click)="goToPage('home')"
     />
     <div>
-      <span class="footer-item" (click)="goToPage('getting-started')">{{
+      <a class="footer-item" routerLink="/getting-started">{{
         'FOOTER.GETTING_STARTED' | translate
-      }}</span>
-      <span class="footer-item" (click)="goToPage('test-cases/redirect')">{{
+      }}</a>
+      <a class="footer-item" routerLink="/test-cases/redirect">{{
         'FOOTER.TEST_CASES' | translate
-      }}</span>
-      <span class="footer-item" (click)="goToPage('faq')">{{
+      }}</a>
+      <a class="footer-item" routerLink="/faq">{{
         'FOOTER.FAQ' | translate
-      }}</span>
-      <span class="footer-item" (click)="goToPage('contact')">{{
+      }}</a>
+      <a class="footer-item" routerLink="/contact">{{
         'FOOTER.CONTACT' | translate
-      }}</span>
+      }}</a>
     </div>
   </div>
 

@@ -132,10 +132,12 @@
         .social-network {
           display: flex;
           flex-direction: row;
-          i {
-            color: #0984bf;
+          .social-network-item {
             font-size: 1.5vw;
             margin-right: 1vw;
+            i {
+              margin-right: 0;
+            }
           }
         }
       }
