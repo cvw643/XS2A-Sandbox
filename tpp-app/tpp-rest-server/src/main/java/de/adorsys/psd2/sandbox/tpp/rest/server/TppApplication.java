@@ -4,7 +4,6 @@ import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtStaffRestClient;
 import de.adorsys.psd2.sandbox.tpp.rest.server.config.TppUiBeFeignConfiguration;
 import de.adorsys.psd2.sandbox.tpp.rest.server.config.EnableXs2aCms;
-import de.adorsys.psd2.sandbox.tpp.rest.server.config.EnableXs2aCms;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
