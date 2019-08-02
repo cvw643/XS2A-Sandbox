@@ -2,7 +2,7 @@ package de.adorsys.psd2.sandbox.tpp.rest.server.controller;
 
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtStaffRestClient;
-import de.adorsys.psd2.sandbox.tpp.rest.api.domain.TppInfo;
+import de.adorsys.psd2.sandbox.tpp.rest.api.domain.User;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppRestApi;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ public class TppController implements TppRestApi {
     }
 
     @Override
-    public ResponseEntity<Void> register(TppInfo tppInfo) {
-        ResponseEntity<UserTO> response = userMgmtStaffRestClient.register(tppInfo.getId(), userMapper.ttpInfoToUserTO(tppInfo));
+    public ResponseEntity<Void> register(User user) {
+        ResponseEntity<UserTO> response = userMgmtStaffRestClient.register(user.getId(), userMapper.toUserTO(user));
 
         return HttpStatus.OK == response.getStatusCode()
                    ? ResponseEntity.status(CREATED).build()
