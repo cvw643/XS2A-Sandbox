@@ -24,7 +24,7 @@ public class TppController implements TppRestApi {
 
     @Override
     public ResponseEntity<Void> register(User user) {
-        userMgmtStaffRestClient.register(user.getId(), userMapper.ttpInfoToUserTO(tppInfo));
+        userMgmtStaffRestClient.register(user.getId(), userMapper.toUserTO(user));
         return ResponseEntity.status(CREATED).build();
     }
 }
