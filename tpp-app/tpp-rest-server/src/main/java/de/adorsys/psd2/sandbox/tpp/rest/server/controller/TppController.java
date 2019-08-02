@@ -1,12 +1,10 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.controller;
 
-import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtStaffRestClient;
 import de.adorsys.psd2.sandbox.tpp.rest.api.domain.TppInfo;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppRestApi;
 import de.adorsys.psd2.sandbox.tpp.rest.server.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
