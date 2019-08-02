@@ -17,17 +17,17 @@ public class UserMapperTest {
 
     @Test
     public void userToUserTOTest() {
-        User tppInfo = new User();
-        tppInfo.setEmail("vne@adorsys.de");
-        tppInfo.setLogin("vne");
-        tppInfo.setPin("12345");
-        tppInfo.setId("12345678");
+        User user = new User();
+        user.setEmail("vne@adorsys.de");
+        user.setLogin("vne");
+        user.setPin("12345");
+        user.setId("12345678");
 
-        UserTO user = userMapper.toUserTO(tppInfo);
+        UserTO userTO = userMapper.toUserTO(user);
 
-        Assert.assertEquals(user.getEmail(), tppInfo.getEmail());
-        Assert.assertEquals(user.getLogin(), tppInfo.getLogin());
-        Assert.assertEquals(user.getPin(), tppInfo.getPin());
+        Assert.assertEquals(userTO.getEmail(), user.getEmail());
+        Assert.assertEquals(userTO.getLogin(), user.getLogin());
+        Assert.assertEquals(userTO.getPin(), user.getPin());
     }
 
     @Test
