@@ -1,4 +1,4 @@
-package de.adorsys.psd2.sandbox.tpp.rest.server.config;
+package de.adorsys.psd2.sandbox.tpp.cms.impl.config;
 
 import org.springframework.context.annotation.Import;
 

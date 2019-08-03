@@ -1,6 +1,6 @@
 package de.adorsys.psd2.sandbox.tpp.rest.api.resource;
 
-import de.adorsys.psd2.sandbox.tpp.rest.api.domain.AisConsent;
+import de.adorsys.psd2.sandbox.tpp.cms.api.domain.AisConsent;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;

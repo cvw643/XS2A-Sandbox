@@ -1,6 +1,6 @@
 package de.adorsys.psd2.sandbox.tpp.rest.server.controller;
 
-import de.adorsys.psd2.sandbox.tpp.rest.api.domain.AisConsent;
+import de.adorsys.psd2.sandbox.tpp.cms.api.domain.AisConsent;
 import de.adorsys.psd2.sandbox.tpp.rest.api.resource.TppConsentRestApi;
 import de.adorsys.psd2.sandbox.tpp.rest.server.service.TppConsentService;
 import lombok.RequiredArgsConstructor;
