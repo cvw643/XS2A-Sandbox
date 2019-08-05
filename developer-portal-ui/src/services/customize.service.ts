@@ -252,6 +252,7 @@ export interface CSSVariables {
   bodyBG?: string;
   headerBG?: string;
   headerFontColor?: string;
+  mainBG?: string;
   footerBG?: string;
   footerFontColor?: string;
   anchorFontColor?: string;

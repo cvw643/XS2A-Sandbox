@@ -12,6 +12,16 @@ body {
   background-color: var(--bodyBG);
 }
 
+main {
+  background: var(--mainBG);
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
 .bold-text {
   font-weight: 800;
 }
