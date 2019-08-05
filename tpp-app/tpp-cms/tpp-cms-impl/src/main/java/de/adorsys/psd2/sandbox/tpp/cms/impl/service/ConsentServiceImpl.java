@@ -18,13 +18,11 @@ public class ConsentServiceImpl implements ConsentService {
     private final AisConsentMapper aisConsentMapper;
 
     @Override
-    @SuppressWarnings({"PMD.UnusedLocalVariable"})
-    public void generateConsents(List<AisConsent> consents) {
-        List<String> collect = consents.stream()
-                                   .map(aisConsentMapper::toCmsAisConsentRequest)
-                                   .map(aisConsentServiceInternal::createConsent)
-                                   .map(Optional::get)
-                                   .collect(Collectors.toList());
-        //TODO return list of Consent ids @pru
+    public List<String> generateConsents(List<AisConsent> consents) {
+        return consents.stream()
+                   .map(aisConsentMapper::toCmsAisConsentRequest)
+                   .map(aisConsentServiceInternal::createConsent)
+                   .map(Optional::get)
+                   .collect(Collectors.toList());
     }
 }

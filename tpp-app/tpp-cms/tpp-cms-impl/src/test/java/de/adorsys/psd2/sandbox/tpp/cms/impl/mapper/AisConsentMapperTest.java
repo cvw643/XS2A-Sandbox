@@ -43,6 +43,8 @@ public class AisConsentMapperTest {
     private static final String STATE = "Bavaria";
     private static final TppRedirectUri TPP_REDIRECT_URI = new TppRedirectUri("http://adorsys.de", "http://google.com");
     private static final TppRedirectUri TPP_CANCEL_URI = new TppRedirectUri("http://gmail.com", "http://unknown.com");
+    private static final ThirdPartyRedirectUri TP_REDIRECT_URI = new ThirdPartyRedirectUri("http://adorsys.de", "http://google.com");
+    private static final ThirdPartyRedirectUri TP_CANCEL_URI = new ThirdPartyRedirectUri("http://gmail.com", "http://unknown.com");
     private static final String ISSUER_CN = "Some issuer";
     private static final String ACC1_ID = "DE12345";
     private static final String ASPSP_ACC1_ID = "ZTD12345";
@@ -106,8 +108,8 @@ public class AisConsentMapperTest {
         info.setOrganisationUnit(ORGANISATION_UNIT);
         info.setCity(CITY);
         info.setState(STATE);
-//        info.setTppRedirectUri(TPP_REDIRECT_URI); //TODO @pruex Where are these???
-//        info.setCancelTppRedirectUri(TPP_CANCEL_URI);
+        info.setTppRedirectUri(TP_REDIRECT_URI);
+        info.setCancelTppRedirectUri(TP_CANCEL_URI);
         info.setIssuerCN(ISSUER_CN);
         return info;
     }
@@ -202,8 +204,8 @@ public class AisConsentMapperTest {
         info.setOrganisationUnit(ORGANISATION_UNIT);
         info.setCity(CITY);
         info.setState(STATE);
-//        info.setTppRedirectUri(TPP_REDIRECT_URI); //TODO THIS SHOULD PROBABLY BE PRESENT
-//        info.setCancelTppRedirectUri(TPP_CANCEL_URI);
+        info.setTppRedirectUri(TPP_REDIRECT_URI);
+        info.setCancelTppRedirectUri(TPP_CANCEL_URI);
         info.setIssuerCN(ISSUER_CN);
 
         return info;
