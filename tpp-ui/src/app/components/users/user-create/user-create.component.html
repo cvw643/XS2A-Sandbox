@@ -75,6 +75,25 @@
                                         Pin must contain at least 5 characters
                                     </div>
                                 </div>
+                                <div class="col-12 col-md-3">
+                                    <label class="control-label" for="tan">TAN</label>
+                                    <input [ngClass]="{ 'is-invalid': (formControl['tan'].touched || submitted) && formControl['tan'].errors }"
+                                           aria-describedby="tanHelp"
+                                           autocomplete="new-tan"
+                                           class="form-control"
+                                           formControlName="tan"
+                                           id="tan"
+                                           placeholder="Enter tan"
+                                           type="password">
+                                    <div *ngIf="(formControl['tan'].touched || submitted) && formControl['tan'].hasError('required')"
+                                         class="invalid-feedback">
+                                        TAN is required
+                                    </div>
+                                    <div *ngIf="(formControl['tan'].touched || submitted) && formControl['tan'].hasError('minlength')"
+                                         class="invalid-feedback">
+                                        TAN must contain at least 5 characters
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
