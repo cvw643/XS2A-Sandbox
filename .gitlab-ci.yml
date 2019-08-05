@@ -394,7 +394,7 @@ deploy_openshift_banking_gateway_dev:
 deploy_openshift_aspsp_xs2a_dev:
   stage: "Deploy"
   only:
-    - master
+    - KOA_add_deploy_tpp_rest_server_to_aspsp_xs2a_project
   variables:
     DOCKER_TAG: latest # Dockerhub source tag
     OPENSHIFT_NAMESPACE: ${OPENSHIFT_NAMESPACE_ASPSP_XS2A_DEV} # Openshift target namespace
