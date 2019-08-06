@@ -6,6 +6,7 @@ import de.adorsys.ledgers.middleware.api.domain.um.AccessTypeTO;
 import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
+import de.adorsys.psd2.sandbox.tpp.rest.server.config.IbanGenerationConfigProperties;
 import de.adorsys.psd2.sandbox.tpp.rest.server.exception.TppException;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.AccountBalance;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
@@ -19,7 +20,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,14 +42,17 @@ public class TestsDataGenerationServiceTest {
     private IbanGenerationService generationService;
     @Mock
     private UserMgmtRestClient userMgmtRestClient;
+    @Mock
+    private IbanGenerationConfigProperties ibanGenerationConfigProperties;
 
     @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
-        generationService = new IbanGenerationService(userMgmtRestClient);
-        ReflectionTestUtils.setField(generationService, "COUNTRY_CODE_PREFIX", COUNTRY_CODE);
-        ReflectionTestUtils.setField(generationService, "BANK_CODE_FOR_RANDOM", BANK_CODE);
-        ReflectionTestUtils.setField(generationService, "BANK_CODE_NISP", BANK_CODE);
+        ibanGenerationConfigProperties = new IbanGenerationConfigProperties();
+        ibanGenerationConfigProperties.getBankCode().setNisp(BANK_CODE);
+        ibanGenerationConfigProperties.getBankCode().setRandom(BANK_CODE);
+        ibanGenerationConfigProperties.setCountryCode(COUNTRY_CODE);
+        generationService = new IbanGenerationService(ibanGenerationConfigProperties, userMgmtRestClient);
     }
 
     @Test
@@ -76,9 +79,9 @@ public class TestsDataGenerationServiceTest {
     }
 
     @Test
-    public void generateNispIban(){
+    public void generateNispIban() {
         String s = generationService.generateIbanForNisp(getPayload(), "00", TPP_ID);
-        assertTrue(StringUtils.isNotBlank(s)&&s.equals(IBAN_PRIMARY));
+        assertTrue(StringUtils.isNotBlank(s) && s.equals(IBAN_PRIMARY));
     }
 
     private DataPayload getPayload() {

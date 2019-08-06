@@ -3,10 +3,10 @@ package de.adorsys.psd2.sandbox.tpp.rest.server.service;
 import de.adorsys.ledgers.middleware.api.domain.um.AccountAccessTO;
 import de.adorsys.ledgers.middleware.api.domain.um.UserTO;
 import de.adorsys.ledgers.middleware.client.rest.UserMgmtRestClient;
+import de.adorsys.psd2.sandbox.tpp.rest.server.config.IbanGenerationConfigProperties;
 import de.adorsys.psd2.sandbox.tpp.rest.server.exception.TppException;
 import de.adorsys.psd2.sandbox.tpp.rest.server.model.DataPayload;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +21,7 @@ public class IbanGenerationService {
     private static final String MSG_NO_IBAN_AVAILABLE = "Could not generate new IBAN, seems you used out all possible combinations";
     private static final String MSG_USER_NOT_FOUND = "User Not Found";
 
-    @Value("${iban.generator.countryCode: DE}")
-    private String COUNTRY_CODE_PREFIX;
-    @Value("${iban.generator.bankCode.random: 76050101}")
-    private String BANK_CODE_FOR_RANDOM;
-    @Value("${iban.generator.bankCode.nisp: 76070024}")
-    private String BANK_CODE_NISP;
-
+    private final IbanGenerationConfigProperties properties;
     private final UserMgmtRestClient userMgmtRestClient;
 
     public String generateRandomIban() {
@@ -43,14 +37,14 @@ public class IbanGenerationService {
         if (payload.getGeneratedIbans().containsKey(iban)) {
             return payload.getGeneratedIbans().get(iban);
         }
-        String generatedIban = generateIban(COUNTRY_CODE_PREFIX, branch, BANK_CODE_FOR_RANDOM, iban);
+        String generatedIban = generateIban(properties.getCountryCode(), branch, properties.getBankCode().getNisp(), iban);
         payload.getGeneratedIbans().put(iban, generatedIban);
         return generatedIban;
     }
 
     private String getNextFreeIban(List<AccountAccessTO> access, String branch) {
         return IntStream.range(0, 100)
-                   .mapToObj(i -> generateIban(COUNTRY_CODE_PREFIX, branch, BANK_CODE_FOR_RANDOM, String.format("%02d", i)))
+                   .mapToObj(i -> generateIban(properties.getCountryCode(), branch, properties.getBankCode().getRandom(), String.format("%02d", i)))
                    .filter(iban -> isNotContainingIban(access, iban))
                    .findFirst()
                    .orElseThrow(() -> new TppException(MSG_NO_IBAN_AVAILABLE, 400));
