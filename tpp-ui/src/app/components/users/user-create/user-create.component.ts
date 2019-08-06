@@ -14,6 +14,8 @@ export class UserCreateComponent implements OnInit {
 
     id: string;
     user: User;
+    valid: true;
+    invalid: false;
 
     userForm: FormGroup;
     submitted: boolean;
@@ -42,7 +44,6 @@ export class UserCreateComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             login: ['', Validators.required],
             pin: ['', [Validators.required, Validators.minLength(5)]],
-            tan: ['', [Validators.required, Validators.maxLength(5)]],
             userRoles: this.formBuilder.array(['CUSTOMER']) // register users with customer role
         });
     }
@@ -50,7 +51,9 @@ export class UserCreateComponent implements OnInit {
     initScaData() {
         return this.formBuilder.group({
             scaMethod: ['EMAIL', Validators.required],
-            methodValue: ['', Validators.required]
+            methodValue: ['', Validators.required],
+            staticTan: ['', Validators.required],
+            usesStaticTan: ['', Validators.required]
         })
     }
 

@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {FormArray, ReactiveFormsModule} from "@angular/forms";
+import {FormArray, ReactiveFormsModule, Validators} from "@angular/forms";
 import {RouterTestingModule} from "@angular/router/testing";
 import {UserCreateComponent} from './user-create.component';
 import {IconModule} from "../../../commons/icon/icon.module";
@@ -10,6 +10,7 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Router} from "@angular/router";
 import {InfoService} from "../../../commons/info/info.service";
 import {InfoModule} from "../../../commons/info/info.module";
+import {isBoolean} from "util";
 
 describe('UserCreateComponent', () => {
     let component: UserCreateComponent;
@@ -112,27 +113,6 @@ describe('UserCreateComponent', () => {
         expect(errors['required']).toBeFalsy();
     });
 
-    it('tan field validity', () => {
-        let errors = {};
-        const tan = component.userForm.controls['tan'];
-        expect(tan.valid).toBeFalsy();
-
-        // pin field is required
-        errors = tan.errors || {};
-        expect(errors['required']).toBeTruthy();
-
-        // pin should have at least 5 characters
-        tan.setValue('1234');
-        errors = tan.errors || {};
-        expect(errors['required']).toBeFalsy();
-        expect(errors['minlength']).toBeTruthy();
-
-        // set pin to something correct
-        tan.setValue('12345');
-        errors = tan.errors || {};
-        expect(errors['required']).toBeFalsy();
-    });
-
     it('SCA validity', () => {
         let errors = {};
         const sca = component.userForm.controls['scaUserData']['controls'][0].controls['methodValue'];
@@ -180,7 +160,9 @@ describe('UserCreateComponent', () => {
         const formGroup = component.initScaData();
         const data = {
             scaMethod: 'EMAIL',
-            methodValue: ''
+            methodValue: '',
+            staticTan: '',
+            usesStaticTan: ''
         };
         expect(formGroup.value).toEqual(data);
     });
@@ -194,8 +176,10 @@ describe('UserCreateComponent', () => {
         component.userForm.controls['email'].setValue('dart.vader@dark-side.com');
         component.userForm.controls['login'].setValue('dart.vader');
         component.userForm.controls['pin'].setValue('12345678');
-        component.userForm.controls['tan'].setValue('12345');
         component.userForm.controls['scaUserData']['controls'][0].controls['methodValue'].setValue('dart.vader@dark-side.com');
+        component.userForm.controls['scaUserData']['controls'][0].controls['staticTan'].setValue('12345');
+        component.userForm.controls['scaUserData']['controls'][0].controls['usesStaticTan'].setValue(true);
+
 
         // create spies and fake call function
         const sampleResponse = {value: 'sample response'};
