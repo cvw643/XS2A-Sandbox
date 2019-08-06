@@ -112,6 +112,27 @@ describe('UserCreateComponent', () => {
         expect(errors['required']).toBeFalsy();
     });
 
+    it('tan field validity', () => {
+        let errors = {};
+        const tan = component.userForm.controls['tan'];
+        expect(tan.valid).toBeFalsy();
+
+        // pin field is required
+        errors = tan.errors || {};
+        expect(errors['required']).toBeTruthy();
+
+        // pin should have at least 5 characters
+        tan.setValue('1234');
+        errors = tan.errors || {};
+        expect(errors['required']).toBeFalsy();
+        expect(errors['minlength']).toBeTruthy();
+
+        // set pin to something correct
+        tan.setValue('12345');
+        errors = tan.errors || {};
+        expect(errors['required']).toBeFalsy();
+    });
+
     it('SCA validity', () => {
         let errors = {};
         const sca = component.userForm.controls['scaUserData']['controls'][0].controls['methodValue'];
@@ -173,6 +194,7 @@ describe('UserCreateComponent', () => {
         component.userForm.controls['email'].setValue('dart.vader@dark-side.com');
         component.userForm.controls['login'].setValue('dart.vader');
         component.userForm.controls['pin'].setValue('12345678');
+        component.userForm.controls['tan'].setValue('12345');
         component.userForm.controls['scaUserData']['controls'][0].controls['methodValue'].setValue('dart.vader@dark-side.com');
 
         // create spies and fake call function
