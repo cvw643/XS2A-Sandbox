@@ -77,11 +77,6 @@ not-confirmed-payment-expiration:
 consent:
   cron:
     expression: 0 0 1 * * ?
-
-encryption:
-  defaultProvider:
-    dataProvider: JcHZwvJMuc
-    idProvider: psGLvQpt9Q
 # --- end --- #
 
 # Iban generator properties
