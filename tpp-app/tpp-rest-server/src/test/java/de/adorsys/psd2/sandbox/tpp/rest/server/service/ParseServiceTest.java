@@ -17,8 +17,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParseServiceTest {
-    private ResourceLoader resourceLoader = new DefaultResourceLoader();
-    private ParseService parseService = new ParseService(resourceLoader);
+    private final ResourceLoader resourceLoader = new DefaultResourceLoader();
+    private final ParseService parseService = new ParseService(resourceLoader);
 
     @Test
     public void getDataFromFile_Consents() throws IOException {
@@ -38,17 +38,18 @@ public class ParseServiceTest {
 
         Optional<DataPayload> data = parseService.getDataFromFile(multipartFile, new TypeReference<DataPayload>() {
         });
-        assertThat(data.isPresent()).isTrue();
-        validateDataPayload(data.get());
+        validateDataPayload(data);
     }
 
-    private void validateDataPayload(DataPayload dataPayload) {
-        assertThat(dataPayload.getBranch() == null).isTrue();
-        assertThat(dataPayload.getGeneratedIbans().size() == 0).isTrue();
-        assertThat(dataPayload.getUsers().size() == 1).isTrue();
-        assertThat(dataPayload.getAccounts().size() == 1).isTrue();
-        assertThat(dataPayload.getBalancesList().size() == 1).isTrue();
-        assertThat(dataPayload.getPayments().size() == 1).isTrue();
+    private void validateDataPayload(Optional<DataPayload> data) {
+        assertThat(data.isPresent()).isTrue();
+        DataPayload payload = data.get();
+        assertThat(payload.getBranch() == null).isTrue();
+        assertThat(payload.getGeneratedIbans().size() == 0).isTrue();
+        assertThat(payload.getUsers().size() == 1).isTrue();
+        assertThat(payload.getAccounts().size() == 1).isTrue();
+        assertThat(payload.getBalancesList().size() == 1).isTrue();
+        assertThat(payload.getPayments().size() == 1).isTrue();
     }
 
     private void assertNoNullFields(AisConsent consent) {

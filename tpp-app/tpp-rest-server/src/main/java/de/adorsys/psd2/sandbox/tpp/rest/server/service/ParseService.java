@@ -24,9 +24,9 @@ public class ParseService {
 
     private final ResourceLoader resourceLoader;
 
-    public <T> Optional<T> getDataFromFile(MultipartFile input, TypeReference<T> t) {
+    public <T> Optional<T> getDataFromFile(MultipartFile input, TypeReference<T> typeReference) {
         try {
-            return Optional.ofNullable(objectMapper.readValue(input.getInputStream(), t));
+            return Optional.ofNullable(objectMapper.readValue(input.getInputStream(), typeReference));
         } catch (IOException e) {
             log.error("Could not map file to Object. \n {}", e.getMessage());
             return Optional.empty();
