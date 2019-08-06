@@ -151,20 +151,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div [formGroupName]="i" class="form-group">
-                                    <label class="control-label" for="scaData">TAN</label>
-                                    <input [ngClass]="{ 'is-invalid': (scaDataItem.controls['staticTan'].touched || submitted) && scaDataItem.controls['staticTan'].errors }"
-                                           aria-describedby="scaDataHelp"
-                                           class="form-control"
-                                           formControlName="staticTan"
-                                           placeholder="Please input TAN for SCA"
-                                           type="text">
-                                    <div *ngIf="(scaDataItem.controls['staticTan'].touched || submitted) && scaDataItem.controls['staticTan'].hasError('required')"
-                                         class="invalid-feedback">
-                                        TAN is required
+                                <div class="col-12 col-md-8">
+                                    <div [formGroupName]="i" class="form-group">
+                                        <label class="control-label" for="scaData">TAN</label>
+                                        <input [ngClass]="{ 'is-invalid': (scaDataItem.controls['staticTan'].touched || submitted) && scaDataItem.controls['staticTan'].errors }"
+                                               aria-describedby="scaDataHelp"
+                                               class="form-control"
+                                               formControlName="staticTan"
+                                               placeholder="Please input TAN for SCA"
+                                               type="text">
+                                        <div *ngIf="(scaDataItem.controls['staticTan'].touched || submitted) && scaDataItem.controls['staticTan'].hasError('required')"
+                                             class="invalid-feedback">
+                                            TAN is required
+                                        </div>
                                     </div>
                                 </div>
-
                                 <div class="col-12 col-md-4 my-auto">
                                     <div [formGroupName]="i">
                                         <div class="d-flex">
