@@ -14,6 +14,8 @@ export class UserCreateComponent implements OnInit {
 
     id: string;
     user: User;
+    valid: true;
+    invalid: false;
 
     userForm: FormGroup;
     submitted: boolean;
@@ -49,7 +51,9 @@ export class UserCreateComponent implements OnInit {
     initScaData() {
         return this.formBuilder.group({
             scaMethod: ['EMAIL', Validators.required],
-            methodValue: ['', Validators.required]
+            methodValue: ['', Validators.required],
+            staticTan: ['', Validators.required],
+            usesStaticTan: ['', Validators.required]
         })
     }
 
