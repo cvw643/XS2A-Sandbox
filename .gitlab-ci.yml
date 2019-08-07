@@ -29,7 +29,6 @@ variables:
   DOCKER_IMAGE_NAME_XS2A_ONLINE_BANKING_UI: "xs2a-online-banking-ui"
   DOCKER_IMAGE_NAME_XS2A_TPP_UI: "xs2a-bank-tpp-ui"
   DOCKER_IMAGE_NAME_XS2A_DEVPORTAL_UI: "xs2a-bank-devportal"
-  DOCKER_IMAGE_NAME_XS2A_POSTMAN_TESTS: "xs2a-postman-tests"
   DOCKER_IMAGE_NAME_XS2A_TPP_REST_SERVER: "xs2a-tpp-rest-server"
 
   ###########################
@@ -100,7 +99,6 @@ variables:
     - docker push "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_TPP_UI}:${DOCKER_TAG}"
     - docker push  "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_TPP_REST_SERVER}:${DOCKER_TAG}"
     - docker push "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_DEVPORTAL_UI}:${DOCKER_TAG}"
-    #- docker push "${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_POSTMAN_TESTS}:${DOCKER_TAG}"
     - docker logout
 
 #Copy Dockerhub TPP rest server image to Openshift (depending on ${DOCKER_TAG})
@@ -145,11 +143,6 @@ variables:
       --dest-creds=openshift:${OPENSHIFT_TOKEN}
       "docker://${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_DEVPORTAL_UI}:${DOCKER_TAG}"
       "docker://${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_DEVPORTAL_UI}:latest"
-#    - >-
-#      skopeo copy
-#      --dest-creds=openshift:${OPENSHIFT_TOKEN}
-#      "docker://${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_POSTMAN_TESTS}:${DOCKER_TAG}"
-#      "docker://${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/${DOCKER_IMAGE_NAME_XS2A_POSTMAN_TESTS}:latest"
 
 # ------------------------------------------------------------------
 # jobs
