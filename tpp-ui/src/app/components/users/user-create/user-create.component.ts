@@ -50,9 +50,9 @@ export class UserCreateComponent implements OnInit {
         return this.formBuilder.group({
             scaMethod: ['EMAIL', Validators.required],
             methodValue: ['', Validators.required],
-            staticTan: ['', Validators.required],
-            usesStaticTan: ['', Validators.required]
-        })
+            staticTan: [''],
+            usesStaticTan: ['']
+        });
     }
 
     addScaDataItem() {

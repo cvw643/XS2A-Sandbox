@@ -99,7 +99,14 @@
                 <div class="border-bottom">
                     <div class="card-body">
                         <div *ngFor="let scaDataItem of formControl['scaUserData']['controls']; let i=index"
-                             class="mb-4">
+                             class="box mb-4">
+                            <button (click)="removeScaDataItem(i)"
+                                    *ngIf="userForm.controls['scaUserData'].controls.length > 0"
+                                    aria-label="Close"
+                                    class="close box__close-icon"
+                                    type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                             <div class="row">
                                 <div class="col-12 col-md-8">
                                     <div [formGroupName]="i" class="form-group">
@@ -141,13 +148,6 @@
                                                     Mobile
                                                 </label>
                                             </div>
-                                            <button (click)="removeScaDataItem(i)"
-                                                    *ngIf="userForm.controls['scaUserData'].controls.length > 0"
-                                                    aria-label="Close"
-                                                    class="close"
-                                                    type="button">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -179,13 +179,6 @@
                                                     Use Static TAN in SandboxMode
                                                 </label>
                                             </div>
-                                            <button (click)="removeScaDataItem(i)"
-                                                    *ngIf="userForm.controls['scaUserData'].controls.length > 0"
-                                                    aria-label="Close"
-                                                    class="close"
-                                                    type="button">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
