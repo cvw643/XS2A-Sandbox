@@ -7,6 +7,7 @@ import de.adorsys.psd2.sandbox.tpp.cms.impl.mapper.AisConsentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,11 +19,13 @@ public class ConsentServiceImpl implements ConsentService {
     private final AisConsentMapper aisConsentMapper;
 
     @Override
+    @Transactional
     public List<String> generateConsents(List<AisConsent> consents) {
-        return consents.stream()
-                   .map(aisConsentMapper::toCmsAisConsentRequest)
-                   .map(aisConsentServiceInternal::createConsent)
-                   .map(Optional::get)
-                   .collect(Collectors.toList());
+        List<String> consentIds = consents.stream().map(aisConsentMapper::toCmsAisConsentRequest)
+                                          .map(aisConsentServiceInternal::createConsent)
+                                          .map(Optional::get)
+                                          .collect(Collectors.toList());
+        return consentIds;
+
     }
 }
