@@ -14,8 +14,6 @@ export class UserCreateComponent implements OnInit {
 
     id: string;
     user: User;
-    valid: true;
-    invalid: false;
 
     userForm: FormGroup;
     submitted: boolean;
