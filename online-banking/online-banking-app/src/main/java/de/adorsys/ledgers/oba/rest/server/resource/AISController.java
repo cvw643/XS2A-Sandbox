@@ -21,6 +21,7 @@ import de.adorsys.psd2.consent.api.CmsAspspConsentDataBase64;
 import de.adorsys.psd2.consent.api.ais.AisAccountAccess;
 import de.adorsys.psd2.consent.api.ais.CmsAisConsentResponse;
 import de.adorsys.psd2.consent.psu.api.ais.CmsAisConsentAccessRequest;
+import de.adorsys.psd2.xs2a.core.consent.ConsentStatus;
 import de.adorsys.psd2.xs2a.core.profile.AccountReference;
 import de.adorsys.psd2.xs2a.core.psu.PsuIdData;
 import feign.FeignException;
@@ -317,8 +318,8 @@ public class AISController extends AbstractXISController implements AISApi {
             AisAccountAccessInfoTO access = new AisAccountAccessInfoTO();
             // Only consent we take.
             access.setBalances(piisConsentRequest.getAccounts().stream()
-                                   .map(AccountReference::getIban)
-                                   .collect(Collectors.toList()));
+                .map(AccountReference::getIban)
+                .collect(Collectors.toList()));
             pisConsent.setAccess(access);
             pisConsent.setFrequencyPerDay(piisConsentRequest.getAllowedFrequencyPerDay());
             pisConsent.setId(cmsCcnsent.getConsentId());
@@ -365,15 +366,15 @@ public class AISController extends AbstractXISController implements AISApi {
         String psuId = AuthUtils.psuId(auth);
         ConsentWorkflow workflow = identifyConsent(encryptedConsentId, authorisationId, true, consentAndAccessTokenCookieString, psuId, response, auth.getBearerToken());
 
-        ScaStatusTO scaStatus = workflow.getScaResponse().getScaStatus();
         CmsAisConsentResponse consentResponse = workflow.getConsentResponse();
+        ConsentStatus consentStatus = consentResponse.getAccountConsent().getConsentStatus();
 
         String tppOkRedirectUri = consentResponse.getTppOkRedirectUri();
         String tppNokRedirectUri = consentResponse.getTppNokRedirectUri();
 
-        String redirectURL = ScaStatusTO.FINALISED.equals(scaStatus)
-                                 ? tppOkRedirectUri
-                                 : tppNokRedirectUri;
+        String redirectURL = ConsentStatus.VALID.equals(consentStatus)
+            ? tppOkRedirectUri
+            : tppNokRedirectUri;
 
         return responseUtils.redirect(redirectURL, response);
     }
@@ -613,8 +614,8 @@ public class AISController extends AbstractXISController implements AISApi {
             // 3.a1) Send back to TPP
             CmsAisConsentResponse consent = responseEntity.getBody();
             String location = StringUtils.isNotBlank(consent.getTppNokRedirectUri())
-                                  ? consent.getTppNokRedirectUri()
-                                  : consent.getTppOkRedirectUri();
+                ? consent.getTppNokRedirectUri()
+                : consent.getTppOkRedirectUri();
             throw new ConsentAuthorizeException(responseUtils.redirect(location, response));
         } else if (responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new ConsentAuthorizeException(responseUtils.couldNotProcessRequest(authResp(), responseEntity.getStatusCode(), response));
@@ -646,9 +647,9 @@ public class AISController extends AbstractXISController implements AISApi {
      */
     private List<String> extractUserIbans(List<AccountDetailsTO> accounts) {
         return accounts
-                   .stream()
-                   .map(AccountDetailsTO::getIban)
-                   .collect(Collectors.toList());
+            .stream()
+            .map(AccountDetailsTO::getIban)
+            .collect(Collectors.toList());
     }
 
     private boolean isConsentGlobal(AisAccountAccess aisAccountAccess) {
